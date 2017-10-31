@@ -1,10 +1,10 @@
 # pho-diff
 
-FIXME: description
+Compare the phonetic inventory of two languages
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Download from https://github.com/sgepigon/pho-diff.
 
 ## Usage
 
