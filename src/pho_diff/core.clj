@@ -1,6 +1,7 @@
 (ns pho-diff.core
   (:gen-class)
   (:require [clojure.spec.alpha :as spec]
+            [me.raynes.conch :as conch]
             [clojure.java.shell :as shell]))
 
 (defn -main
@@ -10,7 +11,11 @@
 
 (def english-cons "resources/inventory")
 
-(shell/sh "ls" english-cons)
 
+(conch/with-programs [ls] (ls english-cons))
+
+(conch/programs convert)
+
+(shell/sh "ls" english-cons)
 
 (shell/sh "convert")
