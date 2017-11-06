@@ -7,12 +7,21 @@
             [expound.alpha :as expound]
             [me.raynes.conch :as conch]))
 
+(def articulations ["cons" "vowels"])
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
   (println "Hello, World!"))
 
 (conch/programs convert)
+
+(spec/def ::lang string?)               ; TODO add the list of available languages
+(spec/def ::articulation (spec/and string? (set articulations)))
+
+(spec/fdef inventory
+           :args (spec/cat :lang ::lang :articulation ::articulation)
+           :ret string?)
 
 (defn- inventory
   "Return the path of the language's inventory for the given articulation, either
@@ -32,6 +41,10 @@
            "(" "-clone" "0-1" "-compose" "darken" "-composite" ")"
            "-channel" "RGB" "-combine" (str "resources/output/" out)))
 
+(spec/fdef diff
+           :args (spec/cat :a ::lang :b ::lang :articulation (spec/? ::articulation))
+           :ret any?)
+
 (defn- diff
   "Generate the diff gif for languages a and b.
 
@@ -43,8 +56,7 @@
              (inventory b articulation)
              (str a "-" b "-" articulation ".gif")))
   ([a b]
-   (let [articulations ["cons" "vowels"]]
-     (map #(diff a b %) articulations))))
+   (map #(diff a b %) articulations)))
 
 (diff "cebuano" "tagalog")
 
