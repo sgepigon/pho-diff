@@ -10,16 +10,14 @@
   [& args]
   (println "Hello, World!"))
 
-(def tagalog-cons "resources/inventory/tagalogipacons.gif")
-(def english-cons "resources/inventory/englishipacons.gif")
+
+(defn- inventory
+  "Return the path of the language's inventory for the given articulation, either
+  consonants (cons) or vowels (vowels)."
+  [lang articulation]
+  (str "resources/inventory/" lang "ipa" articulation ".gif"))
 
 
-(conch/with-programs [ls] (ls english-cons))
-
-(conch/programs convert cd ls pwd)
-
-(shell/sh "ls" english-cons)
-(shell/sh "convert")
 
 (defn diff
   "Return the diff gif for languages a and b.
@@ -36,6 +34,5 @@
    (diff a b "diff.gif")))
 
 
-(diff english-cons tagalog-cons)
 
 (comment (set! spec/*explain-out* expound/printer))
