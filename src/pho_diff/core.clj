@@ -10,6 +10,7 @@
   [& args]
   (println "Hello, World!"))
 
+(conch/programs convert)
 
 (defn- inventory
   "Return the path of the language's inventory for the given articulation, either
@@ -17,22 +18,34 @@
   [lang articulation]
   (str "resources/inventory/" lang "ipa" articulation ".gif"))
 
-
-
-(defn diff
-  "Return the diff gif for languages a and b.
+(defn- diff-gif
+  "Generate the diff gif for languages a.gif and b.gif.
 
   The features only found in language a are colored red, and the features only
   found in language b are colored green. The features common to both languages
   remain in grayscale."
-  ([a b out]
-   (convert "(" (str b) "-flatten" "-grayscale" "Rec709Luminance" ")"
-            "(" (str a) "-flatten" "-grayscale" "Rec709Luminance" ")"
-            "(" "-clone" "0-1" "-compose" "darken" "-composite" ")"
-            "-channel" "RGB" "-combine" (str out)))
+  [a b out]
+  (convert "(" (str b) "-flatten" "-grayscale" "Rec709Luminance" ")"
+           "(" (str a) "-flatten" "-grayscale" "Rec709Luminance" ")"
+           "(" "-clone" "0-1" "-compose" "darken" "-composite" ")"
+           "-channel" "RGB" "-combine" (str "resources/output/" out)))
+
+(defn- diff
+  "Generate the diff gif for languages a and b.
+
+  The features only found in language a are colored red, and the features only
+  found in language b are colored green. The features common to both languages
+  remain in grayscale."
+  ([a b articulation]
+   (diff-gif (inventory a articulation)
+             (inventory b articulation)
+             (str a "-" b "-" articulation ".gif")))
   ([a b]
-   (diff a b "diff.gif")))
+   (let [articulations ["cons" "vowels"]]
+     (map #(diff a b %) articulations))))
 
+(diff "cebuano" "tagalog")
 
+(diff "english" "english")
 
 (comment (set! spec/*explain-out* expound/printer))
