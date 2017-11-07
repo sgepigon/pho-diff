@@ -8,6 +8,8 @@
             [me.raynes.conch :as conch]))
 
 (def articulations ["cons" "vowels"])
+(def ^:private inventory-path "resources/inventory/")
+(def ^:private output-path "resources/output/")
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -27,7 +29,7 @@
   "Return the path of the language's inventory for the given articulation, either
   consonants (cons) or vowels (vowels)."
   [lang articulation]
-  (str "resources/inventory/" lang "ipa" articulation ".gif"))
+  (str inventory-path lang "ipa" articulation ".gif"))
 
 (defn- diff-gif
   "Generate the diff gif for languages a.gif and b.gif.
@@ -39,7 +41,7 @@
   (convert "(" (str b) "-flatten" "-grayscale" "Rec709Luminance" ")"
            "(" (str a) "-flatten" "-grayscale" "Rec709Luminance" ")"
            "(" "-clone" "0-1" "-compose" "darken" "-composite" ")"
-           "-channel" "RGB" "-combine" (str "resources/output/" out)))
+           "-channel" "RGB" "-combine" (str output-path out)))
 
 (spec/fdef diff
            :args (spec/cat :a ::lang :b ::lang :articulation (spec/? ::articulation))
