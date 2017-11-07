@@ -60,10 +60,6 @@
   ([a b]
    (map #(diff a b %) articulations)))
 
-(diff "cebuano" "tagalog")
-
-(diff "english" "english")
-
 ;; ----- spec dev tools -----
 
 (spec.test/instrument)
