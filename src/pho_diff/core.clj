@@ -7,7 +7,7 @@
             [expound.alpha :as expound]
             [me.raynes.conch :as conch]))
 
-(def articulations ["cons" "vowels"])
+(def articulations #{"cons" "vowels"})
 (def ^:private inventory-path "resources/inventory/")
 (def ^:private output-path "resources/output/")
 
@@ -19,7 +19,7 @@
 (conch/programs convert)
 
 (spec/def ::lang string?)               ; TODO add the list of available languages
-(spec/def ::articulation (spec/and string? (set articulations)))
+(spec/def ::articulation (spec/and string? articulations))
 
 (spec/fdef inventory
            :args (spec/cat :lang ::lang :articulation ::articulation)
