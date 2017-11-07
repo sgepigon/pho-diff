@@ -63,16 +63,3 @@
              (str a "-" b "-" articulation ".gif")))
   ([a b]
    (map #(diff a b %) articulations)))
-
-;; ----- spec dev tools -----
-
-(spec.test/instrument)
-
-(comment (set! spec/*explain-out* spec/explain-printer) ; default
-         (set! spec/*explain-out* expound/printer)      ; ...
-         (set! spec/*explain-out* (expound/custom-printer {:show-valid-values? true})) ; show valid values
-
-         (spec.test/instrument)
-         (spec.test/unstrument)
-         :end
-         )
