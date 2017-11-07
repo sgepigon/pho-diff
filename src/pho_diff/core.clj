@@ -31,6 +31,10 @@
   [lang articulation]
   (str inventory-path lang "ipa" articulation ".gif"))
 
+(spec/fdef diff-gif
+           :args (spec/cat :a string? :b string? :out string?)
+           :ret any?)
+
 (defn- diff-gif
   "Generate the diff gif for languages a.gif and b.gif.
 
@@ -38,8 +42,8 @@
   found in language b are colored green. The features common to both languages
   remain in grayscale."
   [a b out]
-  (convert "(" (str b) "-flatten" "-grayscale" "Rec709Luminance" ")"
-           "(" (str a) "-flatten" "-grayscale" "Rec709Luminance" ")"
+  (convert "(" b "-flatten" "-grayscale" "Rec709Luminance" ")"
+           "(" a "-flatten" "-grayscale" "Rec709Luminance" ")"
            "(" "-clone" "0-1" "-compose" "darken" "-composite" ")"
            "-channel" "RGB" "-combine" (str output-path out)))
 
