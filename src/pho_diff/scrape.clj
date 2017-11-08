@@ -14,3 +14,10 @@
   (enlive/html-resource (java.net.URL. url)))
 
 (def html-data (fetch-url archive-url))
+
+(defn- fetch-gif-urls
+  [html-data]
+  (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
+
+(fetch-gif-urls html-data)
+
