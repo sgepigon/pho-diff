@@ -38,3 +38,23 @@
       (string/replace "Native Phonetic Inventory:" "")
       string/triml))
 
+(defn- other-sounds-str
+  "TODO A bit hardcoded and ugly, but it works. Would like to parse in idomatic
+  Enlive."
+  [html-data]
+  (-> (enlive/select html-data [:div.content])
+      first
+      :content
+      (nth 4)))
+
+(spec/fdef other-sounds
+  :args (spec/cat :html-data seq?)
+  :ret (spec/coll-of string? :kind set?))
+
+(defn- other-sounds
+  "Return a set of the phonetic features not included on the IPA chart."
+  [html-data]
+  (set (map string/triml (-> (other-sounds-str html-data)
+                             (string/replace #"other sounds:" "")
+                             (string/replace #"\." "")
+                             (string/split #";")))))
