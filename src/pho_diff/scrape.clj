@@ -6,20 +6,22 @@
             [expound.alpha :as expound]
             [net.cgrand.enlive-html :as enlive]))
 
-(def archive-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=38")
+(def archive-url "http://accent.gmu.edu/browse_native.php")
+(def lang-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=38")
 
 (defn fetch-url
   "Grab the contents of the url specified"
   [url]
   (enlive/html-resource (java.net.URL. url)))
 
-(def html-data (fetch-url archive-url))
+(def lang-data (fetch-url lang-url))
+(def archive-data (fetch-url archive-url))
 
 (defn- fetch-gif-urls
   [html-data]
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
 
-(fetch-gif-urls html-data)
+(fetch-gif-urls lang-data)
 
 (spec/fdef language-name
   :args (spec/cat :html-data seq?)
