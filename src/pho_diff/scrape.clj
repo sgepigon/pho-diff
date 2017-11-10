@@ -10,7 +10,7 @@
 (def lang-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=38")
 
 (defn fetch-url
-  "Grab the contents of the url specified"
+  "Grab the contents of the URL specified"
   [url]
   (enlive/html-resource (java.net.URL. url)))
 
@@ -18,10 +18,9 @@
 (def archive-data (fetch-url archive-url))
 
 (defn- fetch-gif-urls
+  "Return the URLs of the IPA charts"
   [html-data]
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
-
-(fetch-gif-urls lang-data)
 
 (spec/fdef language-name
   :args (spec/cat :html-data seq?)
