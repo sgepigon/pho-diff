@@ -9,18 +9,22 @@
 (def archive-url "http://accent.gmu.edu/browse_native.php")
 (def lang-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=38")
 
+
 (defn fetch-url
   "Grab the contents of the URL specified"
   [url]
   (enlive/html-resource (java.net.URL. url)))
 
+
 (def lang-data (fetch-url lang-url))
 (def archive-data (fetch-url archive-url))
+
 
 (defn- fetch-gif-urls
   "Return the URLs of the IPA charts"
   [html-data]
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
+
 
 (spec/fdef language-name
   :args (spec/cat :html-data seq?)
@@ -39,6 +43,7 @@
       (string/replace "Native Phonetic Inventory:" "")
       string/triml))
 
+
 (defn- other-sounds-str
   "TODO A bit hardcoded and ugly, but it works. Would like to parse in idomatic
   Enlive."
@@ -47,6 +52,7 @@
       first
       :content
       (nth 4)))
+
 
 (spec/fdef other-sounds
   :args (spec/cat :html-data seq?)
