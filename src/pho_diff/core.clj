@@ -22,8 +22,8 @@
 (spec/def ::articulation (spec/and string? articulations))
 
 (spec/fdef inventory
-           :args (spec/cat :lang ::lang :articulation ::articulation)
-           :ret string?)
+  :args (spec/cat :lang ::lang :articulation ::articulation)
+  :ret string?)
 
 (defn- inventory
   "Return the path of the language's inventory for the given articulation, either
@@ -32,8 +32,8 @@
   (str inventory-path lang "ipa" articulation ".gif"))
 
 (spec/fdef diff-gif
-           :args (spec/cat :a string? :b string? :out string?)
-           :ret any?)
+  :args (spec/cat :a string? :b string? :out string?)
+  :ret any?)
 
 (defn- diff-gif
   "Generate the diff gif for languages a.gif and b.gif.
@@ -48,8 +48,8 @@
            "-channel" "RGB" "-combine" (str output-path out)))
 
 (spec/fdef diff
-           :args (spec/cat :a ::lang :b ::lang :articulation (spec/? ::articulation))
-           :ret any?)
+  :args (spec/cat :a ::lang :b ::lang :articulation (spec/? ::articulation))
+  :ret any?)
 
 (defn- diff
   "Generate the diff gif for languages a and b.
