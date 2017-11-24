@@ -33,7 +33,7 @@
 (defn- language-name
   "Return the string of the language
 
-  TODO: parsing the content is still a bit hardcoded. Idomatic Enlive for this
+  TODO: parsing the content is still a bit hard-coded. Idiomatic Enlive for this
   would be nice."
   [html-data]
   (-> (enlive/select html-data [:div.content :h5])
@@ -45,7 +45,7 @@
 
 
 (defn- other-sounds-str
-  "TODO A bit hardcoded and ugly, but it works. Would like to parse in idomatic
+  "TODO A bit hard-coded and ugly, but it works. Would like to parse in idiomatic
   Enlive."
   [html-data]
   (-> (enlive/select html-data [:div.content])
