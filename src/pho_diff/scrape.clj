@@ -29,6 +29,12 @@
 (def lang-data (names->ids archive-data)) ;; TODO
 
 
+(defn fetch-language
+  "TODO Grab the contents of the language specified"
+  [language]
+  (fetch-url (str base-url (get lang-data language))))
+
+
 (defn- fetch-gif-urls
   "Return the URLs of the IPA charts"
   [html-data]
