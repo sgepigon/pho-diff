@@ -16,7 +16,6 @@
   (enlive/html-resource (java.net.URL. url)))
 
 
-(def lang-data (fetch-url lang-url))
 (defn names->ids                      ; TODO get a better name
   "TODO"
   [html-data]
@@ -27,6 +26,7 @@
 
 
 (def archive-data (fetch-url archive-url))
+(def lang-data (names->ids archive-data)) ;; TODO
 
 
 (defn- fetch-gif-urls
