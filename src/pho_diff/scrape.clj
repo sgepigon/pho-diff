@@ -17,6 +17,15 @@
 
 
 (def lang-data (fetch-url lang-url))
+(defn names->ids                      ; TODO get a better name
+  "TODO"
+  [html-data]
+  (let [languages (enlive/select html-data [:div#maincontent :ul :li :a])
+        name :content
+        id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
+    (zipmap (mapcat name languages) (map id languages))))
+
+
 (def archive-data (fetch-url archive-url))
 
 
