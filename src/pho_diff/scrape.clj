@@ -7,7 +7,7 @@
             [net.cgrand.enlive-html :as enlive]))
 
 (def archive-url "http://accent.gmu.edu/browse_native.php")
-(def lang-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=38")
+(def base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
 
 (defn fetch-url
