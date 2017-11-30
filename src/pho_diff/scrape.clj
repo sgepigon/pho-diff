@@ -36,6 +36,11 @@
 
 (spec/def ::html-data seq?)
 
+
+(spec/fdef fetch-gif-urls
+  :args (spec/cat :html-data ::html-data)
+  :ret (spec/coll-of string?))
+
 (defn- fetch-gif-urls
   "Return the URLs of the IPA charts"
   [html-data]
