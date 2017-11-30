@@ -34,6 +34,7 @@
   [language]
   (fetch-url (str base-url (get lang-data language))))
 
+(spec/def ::html-data seq?)
 
 (defn- fetch-gif-urls
   "Return the URLs of the IPA charts"
@@ -42,7 +43,7 @@
 
 
 (spec/fdef language-name
-  :args (spec/cat :html-data seq?)
+  :args (spec/cat :html-data ::html-data)
   :ret string?)
 
 (defn- language-name
@@ -70,7 +71,7 @@
 
 
 (spec/fdef other-sounds
-  :args (spec/cat :html-data seq?)
+  :args (spec/cat :html-data ::html-data)
   :ret (spec/coll-of string? :kind set?))
 
 (defn- other-sounds
