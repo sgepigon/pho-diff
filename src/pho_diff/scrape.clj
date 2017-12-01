@@ -15,18 +15,12 @@
   [url]
   (enlive/html-resource (java.net.URL. url)))
 
-
-(defn names->ids                      ; TODO get a better name
-  "TODO"
-  [html-data]
-  (let [languages (enlive/select html-data [:div#maincontent :ul :li :a])
+(def archive-data (fetch-url archive-url))
+(def lang-data
+  (let [languages (enlive/select archive-data [:div#maincontent :ul :li :a])
         name :content
         id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
     (zipmap (mapcat name languages) (map id languages))))
-
-
-(def archive-data (fetch-url archive-url))
-(def lang-data (names->ids archive-data)) ;; TODO
 
 
 (defn fetch-language
