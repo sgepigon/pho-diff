@@ -7,7 +7,8 @@
                  [expound "0.4.0"]
                  [me.raynes/conch "0.8.0"]
                  [org.clojure/clojure "1.9.0"]
-                 [org.clojure/test.check "0.10.0-alpha2"]]
+                 [org.clojure/test.check "0.10.0-alpha2"]
+                 [spec-provider "0.4.9"]]
   :main ^:skip-aot pho-diff.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

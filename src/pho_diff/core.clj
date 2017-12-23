@@ -5,7 +5,8 @@
             [clojure.spec.gen.alpha :as spec.gen]
             [clojure.spec.test.alpha :as spec.test]
             [expound.alpha :as expound]
-            [me.raynes.conch :as conch]))
+            [me.raynes.conch :as conch]
+            [spec-provider.provider :as provider]))
 
 (def articulations #{"cons" "vowels"})
 (def ^:private inventory-path "resources/inventory/")

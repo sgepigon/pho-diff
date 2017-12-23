@@ -4,7 +4,11 @@
             [clojure.spec.test.alpha :as spec.test]
             [clojure.string :as string]
             [expound.alpha :as expound]
-            [net.cgrand.enlive-html :as enlive]))
+            [net.cgrand.enlive-html :as enlive]
+            [spec-provider.provider :as provider]))
+
+(spec/def ::html-data seq?)
+
 
 (def archive-url "http://accent.gmu.edu/browse_native.php")
 (def base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
@@ -27,9 +31,6 @@
   "TODO Grab the contents of the language specified"
   [language]
   (fetch-url (str base-url (get lang-data language))))
-
-(spec/def ::html-data seq?)
-
 
 (spec/fdef fetch-gif-urls
   :args (spec/cat :html-data ::html-data)
