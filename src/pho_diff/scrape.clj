@@ -56,8 +56,8 @@
       first
       :content
       first
-      (string/replace "Native Phonetic Inventory:" "")
-      string/triml))
+      (string/replace "Native Phonetic Inventory:""")
+      string/trim))
 
 
 (defn- other-sounds-str
