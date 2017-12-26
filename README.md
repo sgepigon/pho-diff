@@ -1,6 +1,6 @@
 # pho-diff
 
-Compare the phonetic inventory of two languages
+Visually compare the phonetic inventories of two languages.
 
 ## Installation
 
@@ -30,7 +30,7 @@ FIXME: listing of options this app accepts.
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 Santiago Gepigon III
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
