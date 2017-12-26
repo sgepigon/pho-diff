@@ -3,10 +3,11 @@
   (:require [clojure.java.shell :as shell]
             [clojure.spec.alpha :as spec]
             [clojure.spec.gen.alpha :as spec.gen]
-            [clojure.spec.test.alpha :as spec.test]
             [expound.alpha :as expound]
             [me.raynes.conch :as conch]
+            [orchestra.spec.test :as spec.test]
             [spec-provider.provider :as provider]))
+
 
 (def articulations #{"cons" "vowels"})
 (def ^:private inventory-path "resources/inventory/")

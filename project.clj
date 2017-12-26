@@ -8,7 +8,8 @@
                  [me.raynes/conch "0.8.0"]
                  [org.clojure/clojure "1.9.0"]
                  [org.clojure/test.check "0.10.0-alpha2"]
-                 [spec-provider "0.4.9"]]
+                 [spec-provider "0.4.9"]
+                 [orchestra "2017.11.12-1"]]
   :main ^:skip-aot pho-diff.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

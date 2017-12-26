@@ -1,10 +1,10 @@
 (ns pho-diff.scrape
   (:require [clojure.spec.alpha :as spec]
             [clojure.spec.gen.alpha :as spec.gen]
-            [clojure.spec.test.alpha :as spec.test]
             [clojure.string :as string]
             [expound.alpha :as expound]
             [net.cgrand.enlive-html :as enlive]
+            [orchestra.spec.test :as spec.test]
             [spec-provider.provider :as provider]))
 
 (spec/def ::html-data seq?)
