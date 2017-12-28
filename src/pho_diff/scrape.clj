@@ -10,24 +10,24 @@
 (spec/def ::html-data seq?)
 
 
-(def archive-url "http://accent.gmu.edu/browse_native.php")
-(def base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
+(def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
+(def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
 
-(defn fetch-url
+(defn- fetch-url
   "Grab the contents of the URL specified"
   [url]
   (enlive/html-resource (java.net.URL. url)))
 
-(def archive-data (fetch-url archive-url))
-(def lang-data
+(def ^:private archive-data (fetch-url archive-url))
+(def ^:private lang-data
   (let [languages (enlive/select archive-data [:div#maincontent :ul :li :a])
         name :content
         id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
     (zipmap (mapcat name languages) (map id languages))))
 
 
-(defn fetch-language
+(defn- fetch-language
   "TODO Grab the contents of the language specified"
   [language]
   (fetch-url (str base-url (get lang-data language))))
