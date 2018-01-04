@@ -11,5 +11,5 @@
   :profiles {:dev {:dependencies [[expound "0.4.0"]
                                   [orchestra "2017.11.12-1"]
                                   [org.clojure/test.check "0.10.0-alpha2"]
-                                  [spec-provider "0.4.9"]]}
+                                  [spec-provider "0.4.11"]]}
              :uberjar {:aot :all}})
