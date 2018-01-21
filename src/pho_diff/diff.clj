@@ -55,8 +55,8 @@
   found in language b are colored green. The features common to both languages
   remain in grayscale."
   ([a b articulation]
-   (diff-gif a #_(inventory a articulation)
-             b #_(inventory b articulation)
+   (diff-gif (inventory a articulation)
+             (inventory b articulation)
              (str a "-" b "-" articulation ".gif")))
   ([a b]
    (map #(diff a b %) articulations)))
