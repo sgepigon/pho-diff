@@ -8,13 +8,9 @@ Download from https://github.com/sgepigon/pho-diff.
 
 ## Usage
 
-FIXME: explanation
-
     $ java -jar pho-diff-0.1.0-standalone.jar [args]
 
 ## Options
-
-FIXME: listing of options this app accepts.
 
 ## Examples
 
