@@ -41,6 +41,9 @@
   [html-data]
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
 
+(let [[consonants vowels] (map slurp (fetch-gif-urls
+                                      (fetch-language "tagalog")))])
+comp type
 
 (spec/fdef language-name
   :args (spec/cat :html-data ::html-data)
