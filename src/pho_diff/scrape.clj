@@ -41,8 +41,20 @@
   [html-data]
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
 
-(let [[consonants vowels] (map slurp (fetch-gif-urls
-                                      (fetch-language "tagalog")))])
+(spec/fdef slurp-charts
+  :args (spec/cat :language-name string?)
+  :ret map?)
+
+(defn slurp-charts
+  "TODO"
+  [language]
+  (let [[consonants vowels] (map slurp (fetch-gif-urls (fetch-language language)))]
+    {:cons consonants
+     :vowels vowels}))
+
+(slurp-charts "tagalog")
+
+(fetch-gif-urls (fetch-language "tagalog"))
 
 (spec/fdef language-name
   :args (spec/cat :html-data ::html-data)

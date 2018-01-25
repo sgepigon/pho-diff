@@ -60,3 +60,8 @@
              (str a "-" b "-" articulation ".gif")))
   ([a b]
    (map #(diff a b %) articulations)))
+
+(defn diff-charts
+  "TODO"
+  [a b articulation]
+  (diff-gif a b articulation))
