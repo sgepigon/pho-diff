@@ -49,13 +49,18 @@
 (defn slurp-charts
   "TODO"
   [language]
-  (let [[consonants vowels] (map slurp (fetch-gif-urls (fetch-language language)))]
-    {:cons consonants
-     :vowels vowels}))
+  (let [[consonants vowels] (map slurp (fetch-gif-urls (fetch-language language)))
+        cons-gif (str inventory-path language "ipacons.gif")
+        vowels-gif (str inventory-path language "ipavowels.gif")]
+    (do (spit consonants cons-gif)
+        (spit vowels vowels-gif)
+        {:cons cons-gif
+         :vowels vowels-gif})))
 
 (slurp-charts "tagalog")
 
-(fetch-gif-urls (fetch-language "tagalog"))
+(spit (slurp (first (fetch-gif-urls (fetch-language "tagalog"))))
+      (str inventory-path "test.gif"))
 
 (spec/fdef language-name
   :args (spec/cat :html-data ::html-data)
