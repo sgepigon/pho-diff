@@ -10,6 +10,7 @@
 (spec/def ::html-data seq?)
 
 
+(def ^:private inventory-path "resources/inventory/")
 (def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
 (def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
