@@ -57,11 +57,6 @@
         {:cons cons-gif
          :vowels vowels-gif})))
 
-(slurp-charts "tagalog")
-
-(spit (slurp (first (fetch-gif-urls (fetch-language "tagalog"))))
-      (str inventory-path "test.gif"))
-
 (spec/fdef language-name
   :args (spec/cat :html-data ::html-data)
   :ret string?)
