@@ -33,11 +33,11 @@
   [language]
   (fetch-url (str base-url (get lang-data language))))
 
-(spec/fdef fetch-gif-urls
+(spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
   :ret (spec/coll-of string?))
 
-(defn- fetch-gif-urls
+(defn- fetch-charts
   "Return the URLs of the IPA charts"
   [html-data]
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
@@ -49,7 +49,7 @@
 (defn slurp-charts
   "TODO"
   [language]
-  (let [[consonants vowels] (map slurp (fetch-gif-urls (fetch-language language)))
+  (let [[consonants vowels] (map slurp (fetch-charts (fetch-language language)))
         cons-gif (str inventory-path language "ipacons.gif")
         vowels-gif (str inventory-path language "ipavowels.gif")]
     (do (spit consonants cons-gif)
