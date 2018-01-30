@@ -14,7 +14,3 @@
   "I don't do a whole lot ... yet."
   [& args]
   (println "Hello, World!"))
-
-(diff/diff-charts (:cons (scrape/slurp-charts "english"))
-                  (:cons (scrape/slurp-charts "tagalog"))
-                  "cons")
