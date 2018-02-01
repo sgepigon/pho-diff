@@ -48,7 +48,7 @@
   :ret map?)
 
 (defn slurp-charts
-  "TODO"
+  "FIXME docstring"
   [language]
   (let [[consonants vowels] (map slurp (fetch-charts (fetch-language language)))
         cons-gif (str inventory-path language "ipacons.gif")
