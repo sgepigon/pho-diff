@@ -47,16 +47,23 @@
   :args (spec/cat :language-name string?)
   :ret map?)
 
+(defn copy-uri-to-file [uri file]
+  "TODO https://stackoverflow.com/questions/15628682/in-clojure-how-do-you-download-an-image-from-the-web-and-save-it-to-your-file-s"
+  (with-open [in (clojure.java.io/input-stream uri)
+              out (clojure.java.io/output-stream file)]
+    (clojure.java.io/copy in out)))
+
 (defn slurp-charts
-  "FIXME docstring"
+  "FIXME docstring
+  https://stackoverflow.com/questions/11321264/saving-an-image-form-clj-http-request-to-file"
   [language]
-  (let [[consonants vowels] (map slurp (fetch-charts (fetch-language language)))
-        cons-gif (str inventory-path language "ipacons.gif")
-        vowels-gif (str inventory-path language "ipavowels.gif")]
-    (do (spit consonants cons-gif)
-        (spit vowels vowels-gif)
-        {:cons cons-gif
-         :vowels vowels-gif})))
+  (let [[cons-uri vowels-uri] (fetch-charts (fetch-language language))
+        cons-path (str inventory-path language "ipacons.gif")
+        vowels-path (str inventory-path language "ipavowels.gif")]
+    (do (copy-uri-to-file cons-uri cons-path)
+        (copy-uri-to-file vowels-uri vowels-path)
+        {:cons cons-path
+         :vowels vowels-path})))
 
 (spec/fdef language-name
   :args (spec/cat :html-data ::html-data)

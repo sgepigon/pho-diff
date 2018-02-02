@@ -59,7 +59,7 @@
              (inventory b articulation)
              (str a "-" b "-" articulation ".gif")))
   ([a b]
-   (map #(diff a b %) articulations)))
+   (doseq [articulation articulations] (diff a b articulation))))
 
 (defn diff-charts
   "TODO"
