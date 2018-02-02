@@ -10,11 +10,9 @@
 
 (spec/def ::html-data seq?)
 
-
 (def ^:private inventory-path "resources/inventory/")
 (def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
 (def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
-
 
 (defn- fetch-url
   "Grab the contents of the URL specified"
@@ -27,7 +25,6 @@
         name :content
         id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
     (zipmap (mapcat name languages) (map id languages))))
-
 
 (defn- fetch-language
   "TODO Grab the contents of the language specified"
@@ -79,9 +76,8 @@
       first
       :content
       first
-      (string/replace "Native Phonetic Inventory:""")
+      (string/replace "Native Phonetic Inventory:" "")
       string/trim))
-
 
 (defn- other-sounds-str
   "TODO A bit hard-coded and ugly, but it works. Would like to parse in idiomatic
@@ -91,7 +87,6 @@
       first
       :content
       (nth 4)))
-
 
 (spec/fdef other-sounds
   :args (spec/cat :html-data ::html-data)

@@ -8,7 +8,6 @@
             [orchestra.spec.test :as spec.test]
             [spec-provider.provider :as provider]))
 
-
 (def articulations #{"cons" "vowels"})
 (def ^:private inventory-path "resources/inventory/")
 (def ^:private output-path "resources/output/")
