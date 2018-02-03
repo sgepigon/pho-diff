@@ -1,5 +1,6 @@
 (ns pho-diff.scrape
-  (:require [clojure.spec.alpha :as spec]
+  (:require [clojure.java.io :as io]
+            [clojure.spec.alpha :as spec]
             [clojure.spec.gen.alpha :as spec.gen]
             [clojure.string :as string]
             [expound.alpha :as expound]
@@ -18,6 +19,15 @@
   "Grab the contents of the URL specified"
   [url]
   (enlive/html-resource (java.net.URL. url)))
+
+(defn- copy-uri-to-file
+  "Copy a URI to file
+
+  Source: https://stackoverflow.com/questions/15628682/"
+  [uri file]
+  (with-open [in (io/input-stream uri)
+              out (io/output-stream file)]
+    (io/copy in out)))
 
 (def ^:private archive-data (fetch-url archive-url))
 (def ^:private lang-data
@@ -43,12 +53,6 @@
 (spec/fdef slurp-charts
   :args (spec/cat :language-name string?)
   :ret map?)
-
-(defn copy-uri-to-file [uri file]
-  "TODO https://stackoverflow.com/questions/15628682/in-clojure-how-do-you-download-an-image-from-the-web-and-save-it-to-your-file-s"
-  (with-open [in (clojure.java.io/input-stream uri)
-              out (clojure.java.io/output-stream file)]
-    (clojure.java.io/copy in out)))
 
 (defn slurp-charts
   "FIXME docstring
