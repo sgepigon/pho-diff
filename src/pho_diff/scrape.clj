@@ -36,6 +36,9 @@
         id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
     (zipmap (mapcat name languages) (map id languages))))
 
+(def ^:private languages (sort (keys lang-data)))
+(spec/def ::language (set languages))
+
 (defn- fetch-language
   "TODO Grab the contents of the language specified"
   [language]
@@ -51,7 +54,7 @@
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
 
 (spec/fdef slurp-charts
-  :args (spec/cat :language-name string?)
+  :args (spec/cat :language ::language)
   :ret map?)
 
 (defn slurp-charts
@@ -69,7 +72,7 @@
 
 (spec/fdef language-name
   :args (spec/cat :html-data ::html-data)
-  :ret string?)
+  :ret ::language)
 
 (defn- language-name
   "Return the string of the language
