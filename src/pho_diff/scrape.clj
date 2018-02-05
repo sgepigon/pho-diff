@@ -88,7 +88,9 @@
       string/trim))
 
 (defn- other-sounds-str
-  "TODO A bit hard-coded and ugly, but it works. Would like to parse in idiomatic
+  "Helper function for `other-sounds`
+
+  TODO A bit hard-coded and ugly, but it works. Would like to parse in idiomatic
   Enlive."
   [html-data]
   (-> (enlive/select html-data [:div.content])
