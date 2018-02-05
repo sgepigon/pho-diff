@@ -55,13 +55,14 @@
   :ret map?)
 
 (defn slurp-charts
-  "FIXME docstring
-  https://stackoverflow.com/questions/11321264/saving-an-image-form-clj-http-request-to-file"
+  "Return a map of consonant and vowel charts for the input language
+
+  Source: https://stackoverflow.com/questions/11321264/"
   [language]
   (let [[cons-uri vowels-uri] (fetch-charts (fetch-language language))
         cons-path (str inventory-path language "ipacons.gif")
         vowels-path (str inventory-path language "ipavowels.gif")]
-    (do (copy-uri-to-file cons-uri cons-path)
+    (do (copy-uri-to-file cons-uri cons-path) ; TODO is this idiomatic use of `do`?
         (copy-uri-to-file vowels-uri vowels-path)
         {:cons cons-path
          :vowels vowels-path})))
