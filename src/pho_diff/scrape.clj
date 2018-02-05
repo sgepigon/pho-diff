@@ -43,7 +43,7 @@
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
-  :ret (spec/coll-of string?))
+  :ret (spec/coll-of string? :count 2))
 
 (defn- fetch-charts
   "Return the URLs of the IPA charts"
