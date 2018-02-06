@@ -39,6 +39,11 @@
 (def ^:private languages (sort (keys lang-data)))
 (spec/def ::language (set languages))
 
+(defn- language->kebab
+  "Conform any language string to kebab-style"
+  [s]
+  (string/replace s #"\s" "-"))
+
 (defn- fetch-language
   "TODO Grab the contents of the language specified"
   [language]
