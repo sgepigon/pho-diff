@@ -55,8 +55,8 @@
 
 (spec/fdef slurp-charts
   :args (spec/cat :language ::language)
-  :ret map?)
-
+  ;; TODO Do I need to write `spec/def`s for ::cons and ::vowels?
+  :ret (spec/keys :req-un [::cons ::vowels]))
 (defn slurp-charts
   "Return a map of consonant and vowel charts for the input language
 
