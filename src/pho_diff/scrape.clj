@@ -39,6 +39,10 @@
 (def ^:private languages (sort (keys lang-data)))
 (spec/def ::language (set languages))
 
+(spec/fdef language->kebab
+  :args (spec/cat :s ::language)
+  :ret string?)
+
 (defn- language->kebab
   "Conform any language string to kebab-style"
   [s]
