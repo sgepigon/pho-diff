@@ -1,35 +1,20 @@
 (ns pho-diff.scrape
-  (:require [clojure.java.io :as io]
-            [clojure.spec.alpha :as spec]
+  (:require [clojure.spec.alpha :as spec]
             [clojure.spec.gen.alpha :as spec.gen]
             [clojure.string :as string]
             [expound.alpha :as expound]
             [me.raynes.conch :as conch]
             [net.cgrand.enlive-html :as enlive]
             [orchestra.spec.test :as spec.test]
+            [pho-diff.util :as util]
             [spec-provider.provider :as provider]))
 
 (spec/def ::html-data seq?)
 
-(def ^:private inventory-path "resources/inventory/")
 (def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
 (def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
-(defn- fetch-url
-  "Grab the contents of the URL specified"
-  [url]
-  (enlive/html-resource (java.net.URL. url)))
-
-(defn- copy-uri-to-file
-  "Copy a URI to file
-
-  Source: https://stackoverflow.com/questions/15628682/"
-  [uri file]
-  (with-open [in (io/input-stream uri)
-              out (io/output-stream file)]
-    (io/copy in out)))
-
-(def ^:private archive-data (fetch-url archive-url))
+(def ^:private archive-data (util/fetch-url archive-url))
 (def ^:private lang-data
   (let [languages (enlive/select archive-data [:div#maincontent :ul :li :a])
         name :content
@@ -39,24 +24,10 @@
 (def ^:private languages (sort (keys lang-data)))
 (spec/def ::language (set languages))
 
-(spec/fdef language->kebab
-  :args (spec/cat :s ::language)
-  :ret string?)
-
-(defn- language->kebab
-  "Conform any language string to kebab-style"
-  [s]
-  (string/replace s #"\s" "-"))
-
-(defn pathify
-  "Create a file path for a language and articulation"
-  [language articulation]
-  (str inventory-path (language->kebab language) "ipa" articulation ".gif"))
-
 (defn- fetch-language
   "TODO Grab the contents of the language specified"
   [language]
-  (fetch-url (str base-url (get lang-data language))))
+  (util/fetch-url (str base-url (get lang-data language))))
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
@@ -78,10 +49,10 @@
   Source: https://stackoverflow.com/questions/11321264/"
   [language]
   (let [[cons-uri vowels-uri] (fetch-charts (fetch-language language))
-        cons-path (pathify language "cons")
-        vowels-path (pathify language "vowels")]
-    (do (copy-uri-to-file cons-uri cons-path) ; TODO is this idiomatic use of `do`?
-        (copy-uri-to-file vowels-uri vowels-path)
+        cons-path (util/pathify language "cons")
+        vowels-path (util/pathify language "vowels")]
+    (do (util/copy-uri-to-file cons-uri cons-path) ; TODO is this idiomatic use of `do`?
+        (util/copy-uri-to-file vowels-uri vowels-path)
         {:cons cons-path
          :vowels vowels-path})))
 
