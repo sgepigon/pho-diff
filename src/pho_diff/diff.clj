@@ -1,13 +1,8 @@
 (ns pho-diff.diff
   (:gen-class)
-  (:require [clojure.java.shell :as shell]
-            [clojure.spec.alpha :as spec]
-            [clojure.spec.gen.alpha :as spec.gen]
-            [expound.alpha :as expound]
+  (:require [clojure.spec.alpha :as spec]
             [me.raynes.conch :as conch]
-            [orchestra.spec.test :as spec.test]
-            [pho-diff.util :as util]
-            [spec-provider.provider :as provider]))
+            [pho-diff.util :as util]))
 
 (def articulations #{"cons" "vowels"})
 

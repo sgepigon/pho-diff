@@ -1,13 +1,8 @@
 (ns pho-diff.util
   (:require [clojure.java.io :as io]
             [clojure.spec.alpha :as spec]
-            [clojure.spec.gen.alpha :as spec.gen]
             [clojure.string :as string]
-            [expound.alpha :as expound]
-            [me.raynes.conch :as conch]
-            [net.cgrand.enlive-html :as enlive]
-            [orchestra.spec.test :as spec.test]
-            [spec-provider.provider :as provider]))
+            [net.cgrand.enlive-html :as enlive]))
 
 (def ^:private inventory-path "resources/inventory/")
 (def ^:private output-path "resources/output/")
