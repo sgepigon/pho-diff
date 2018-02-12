@@ -27,12 +27,12 @@
            "(" "-clone" "0-1" "-compose" "darken" "-composite" ")"
            "-channel" "RGB" "-combine" out))
 
-(spec/fdef diff
+(spec/fdef diff-charts
   :args (spec/cat :a ::lang :b ::lang :articulation (spec/? ::articulation))
   :ret any?)
 
-(defn diff
-  "Generate the diff gif for languages a and b.
+(defn- diff-charts
+  "Generate the diff chart for languages a and b.
 
   The features only found in language a are colored red, and the features only
   found in language b are colored green. The features common to both languages
@@ -42,9 +42,12 @@
              (util/pathify b articulation)
              (util/pathify a b articulation)))
   ([a b]
-   (doseq [articulation articulations] (diff a b articulation))))
+   (doseq [articulation articulations] (diff-charts a b articulation))))
 
-(defn diff-charts
-  "TODO"
-  [a b articulation]
-  (diff-gif a b articulation))
+(spec/fdef diff
+  :args (spec/cat :a ::lang :b ::lang)
+  :ret any?)
+
+(defn diff
+  "TODO Implement full `diff` with `diff-charts` and `other-sounds`"
+  [a b])
