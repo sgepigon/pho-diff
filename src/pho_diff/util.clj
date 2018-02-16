@@ -4,8 +4,8 @@
             [clojure.string :as string]
             [net.cgrand.enlive-html :as enlive]))
 
-(def ^:private inventory-path "resources/inventory/")
-(def ^:private output-path "resources/output/")
+(def ^:private inventory "resources/inventory/")
+(def ^:private output "resources/output/")
 
 (defn fetch-url
   "Grab the contents of the URL specified"
