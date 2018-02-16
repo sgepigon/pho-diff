@@ -8,7 +8,6 @@
 
 (conch/programs convert)
 
-(spec/def ::lang string?)               ; TODO add the list of available languages
 (spec/def ::articulation (spec/and string? articulations))
 
 (spec/fdef diff-gif
@@ -28,7 +27,7 @@
            "-channel" "RGB" "-combine" out))
 
 (spec/fdef diff-charts
-  :args (spec/cat :a ::lang :b ::lang :articulation (spec/? ::articulation))
+  :args (spec/cat :a :pho-diff.scrape/language :b :pho-diff.scrape/language :articulation (spec/? ::articulation))
   :ret any?)
 
 (defn- diff-charts
@@ -45,7 +44,7 @@
    (doseq [articulation articulations] (diff-charts a b articulation))))
 
 (spec/fdef diff
-  :args (spec/cat :a ::lang :b ::lang)
+  :args (spec/cat :a :pho-diff.scrape/language :b :pho-diff.scrape/language)
   :ret any?)
 
 (defn diff
