@@ -44,8 +44,8 @@
   Source: https://stackoverflow.com/questions/11321264/"
   [language]
   (let [[cons-uri vowels-uri] (fetch-charts (fetch-language language))
-        cons-path (util/pathify language "cons")
-        vowels-path (util/pathify language "vowels")]
+        cons-path (util/->path language "cons")
+        vowels-path (util/->path language "vowels")]
     (do (util/copy-uri-to-file cons-uri cons-path) ; TODO is this idiomatic use of `do`?
         (util/copy-uri-to-file vowels-uri vowels-path)
         {:cons cons-path

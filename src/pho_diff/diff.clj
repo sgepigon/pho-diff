@@ -37,11 +37,13 @@
   found in language b are colored green. The features common to both languages
   remain in grayscale."
   ([a b articulation]
-   (diff-gif (util/pathify a articulation)
-             (util/pathify b articulation)
-             (util/pathify a b articulation)))
+   (diff-gif (util/->path a articulation)
+             (util/->path b articulation)
+             (util/->path a b articulation)))
   ([a b]
-   (doseq [articulation articulations] (diff-charts a b articulation))))
+   (for [articulation articulations]
+     (do (diff-charts a b articulation)
+         (util/->path a b articulation)))))
 
 (spec/fdef diff
   :args (spec/cat :a :pho-diff.scrape/language :b :pho-diff.scrape/language)

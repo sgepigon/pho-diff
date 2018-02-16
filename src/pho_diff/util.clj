@@ -30,7 +30,6 @@
   [s]
   (-> s string/trim (string/replace #"\s" "-")))
 
-(defn pathify
 (spec/fdef ->filename
   :args (spec/cat :language :pho-diff.scrape/language)
   :ret string?)
@@ -41,10 +40,10 @@
    (str (whitespace->kebab language) "ipa" articulation ".gif"))
   ([a b articulation]
    (str (whitespace->kebab a) "-" (whitespace->kebab b) "-" articulation ".gif")))
+
+(defn ->path
   "Create a file path for a language inventory or an diff of two inventories, a b"
   ([language articulation]
-   (str inventory-path (whitespace->kebab language) "ipa" articulation ".gif"))
+   (str inventory (->filename language articulation)))
   ([a b articulation]
-   (str output-path
-        (whitespace->kebab a) "-" (whitespace->kebab b) "-"
-        articulation ".gif")))
+   (str output (->filename a b articulation))))
