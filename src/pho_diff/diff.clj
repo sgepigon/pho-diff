@@ -2,6 +2,7 @@
   (:gen-class)
   (:require [clojure.spec.alpha :as spec]
             [me.raynes.conch :as conch]
+            [pho-diff.scrape :as scrape]
             [pho-diff.util :as util]))
 
 (def articulations #{"cons" "vowels"})
@@ -51,4 +52,11 @@
 
 (defn diff
   "TODO Implement full `diff` with `diff-charts` and `other-sounds`"
-  [a b])
+  [a b]
+  ;; Are the charts already downloaded?
+  (cond
+    (util/diffed? a b) (for [articulation articulations] (util/->path a b articulation))
+    (and (util/inventory? a) (util/inventory? b)) (diff-charts a b)
+    :else (do (scrape/slurp-charts a)
+              (scrape/slurp-charts b)
+              (diff-charts a b))))

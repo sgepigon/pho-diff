@@ -47,3 +47,24 @@
    (str inventory (->filename language articulation)))
   ([a b articulation]
    (str output (->filename a b articulation))))
+
+(spec/fdef inventory?
+  :args (spec/cat :language :pho-diff.scrape/language)
+  :ret boolean?)
+
+(defn inventory?
+  "Check if the charts for a given language are already in the inventory"
+  [language]
+  (every? true? (for [articulation ["cons" "vowels"]]
+                  (.exists (io/file (->path language articulation))))))
+
+(spec/fdef diffed?
+  :args (spec/cat :a :pho-diff.scrape/language
+                  :b :pho-diff.scrape/language)
+  :ret boolean?)
+
+(defn diffed?
+  "Check if two languages have already been diffed"
+  [a b]
+  (every? true? (for [articulation ["cons" "vowels"]]
+                  (.exists (io/file (->path a b articulation))))))
