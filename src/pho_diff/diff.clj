@@ -2,14 +2,11 @@
   (:gen-class)
   (:require [clojure.spec.alpha :as spec]
             [me.raynes.conch :as conch]
+            [pho-diff.lang :as lang]
             [pho-diff.scrape :as scrape]
             [pho-diff.util :as util]))
 
-(def articulations #{"cons" "vowels"})
-
 (conch/programs convert)
-
-(spec/def ::articulation (spec/and string? articulations))
 
 (spec/fdef diff-gif
   :args (spec/cat :a string? :b string? :out string?)
@@ -28,7 +25,11 @@
            "-channel" "RGB" "-combine" out))
 
 (spec/fdef diff-charts
-  :args (spec/cat :a :pho-diff.scrape/language :b :pho-diff.scrape/language :articulation (spec/? ::articulation))
+  :args (spec/alt :single-chart (spec/cat :a ::lang/language
+                                          :b ::lang/language
+                                          :articulation ::lang/articulation)
+                  :both-charts (spec/cat :a ::lang/language
+                                         :b ::lang/language))
   :ret any?)
 
 (defn- diff-charts
@@ -42,12 +43,12 @@
              (util/->path b articulation)
              (util/->path a b articulation)))
   ([a b]
-   (for [articulation articulations]
+   (for [articulation lang/articulations]
      (do (diff-charts a b articulation)
          (util/->path a b articulation)))))
 
 (spec/fdef diff
-  :args (spec/cat :a :pho-diff.scrape/language :b :pho-diff.scrape/language)
+  :args (spec/cat :a ::lang/language :b ::lang/language)
   :ret any?)
 
 (defn diff
@@ -55,7 +56,8 @@
   [a b]
   ;; Are the charts already downloaded?
   (cond
-    (util/diffed? a b) (for [articulation articulations] (util/->path a b articulation))
+    (util/diffed? a b) (for [articulation lang/articulations]
+                         (util/->path a b articulation))
     (and (util/inventory? a) (util/inventory? b)) (diff-charts a b)
     :else (do (scrape/slurp-charts a)
               (scrape/slurp-charts b)

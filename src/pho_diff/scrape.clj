@@ -2,6 +2,7 @@
   (:require [clojure.spec.alpha :as spec]
             [clojure.string :as string]
             [net.cgrand.enlive-html :as enlive]
+            [pho-diff.lang :as lang]
             [pho-diff.util :as util]))
 
 (spec/def ::html-data seq?)
@@ -17,7 +18,7 @@
     (zipmap (mapcat name languages) (map id languages))))
 
 (def ^:private languages (sort (keys lang-data)))
-(spec/def ::language (set languages))
+(spec/def ::lang/language (set languages))
 
 (defn- fetch-language
   "TODO Grab the contents of the language specified"
@@ -34,7 +35,7 @@
   (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
 
 (spec/fdef slurp-charts
-  :args (spec/cat :language ::language)
+  :args (spec/cat :language ::lang/language)
   ;; TODO Do I need to write `spec/def`s for ::cons and ::vowels?
   :ret (spec/keys :req-un [::cons ::vowels]))
 
