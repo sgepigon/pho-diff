@@ -29,7 +29,7 @@
 (defn whitespace->kebab
   "Replace internal whitespaces with dashes in a string kebab-style"
   [s]
-  (-> s string/trim (string/replace #"\s" "-")))
+  (-> s string/lower-case string/trim (string/replace #"\s" "-")))
 
 (spec/fdef ->filename
   :args (spec/alt :single (spec/cat :language ::lang/language
