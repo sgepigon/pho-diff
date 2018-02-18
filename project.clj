@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[enlive "1.1.6"]
                  [me.raynes/conch "0.8.0"]
-                 [org.clojure/clojure "1.10.0-alpha2"]]
+                 [org.clojure/clojure "1.10.0-alpha4"]]
   :main ^:skip-aot pho-diff.core
   :target-path "target/%s"
   :profiles {:dev {:source-paths ["dev"]

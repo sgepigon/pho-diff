@@ -1,5 +1,9 @@
 (ns pho-diff.core
-  (:gen-class))
+  (:gen-class)
+  (:require [pho-diff.diff :as diff]
+            [pho-diff.lang :as lang]
+            [pho-diff.scrape :as scrape]
+            [pho-diff.util :as util]))
 
 (defn -main
   "I don't do a whole lot ... yet."
