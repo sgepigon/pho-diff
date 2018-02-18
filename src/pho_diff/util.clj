@@ -22,14 +22,16 @@
               out (io/output-stream file)]
     (io/copy in out)))
 
-(spec/fdef whitespace->kebab
+(spec/fdef ->kebab
   :args (spec/cat :s string?)
   :ret string?)
 
-(defn whitespace->kebab
-  "Replace internal whitespaces with dashes in a string kebab-style"
+(defn ->kebab
+  "Replace invalid filename characters with dashes in a string, kebab-style"
   [s]
-  (-> s string/lower-case string/trim (string/replace #"\s" "-")))
+  ;; regex source: https://stackoverflow.com/a/2059612
+  (let [invalid-chars #"[^_a-zA-Z0-9\\-\\.]"]
+    (-> s string/lower-case string/trim (string/replace invalid-chars "-"))))
 
 (spec/fdef ->filename
   :args (spec/alt :single (spec/cat :language ::lang/language
@@ -42,9 +44,9 @@
 (defn ->filename
   "Create a file name for a language inventory or a diff of two inventories, a b"
   ([language articulation]
-   (str (whitespace->kebab language) "ipa" articulation ".gif"))
+   (str (->kebab language) "ipa" articulation ".gif"))
   ([a b articulation]
-   (str (whitespace->kebab a) "-" (whitespace->kebab b) "-" articulation ".gif")))
+   (str (->kebab a) "-" (->kebab b) "-" articulation ".gif")))
 
 (spec/fdef ->path
   :args (spec/alt :single (spec/cat :language ::lang/language
