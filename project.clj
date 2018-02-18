@@ -8,7 +8,8 @@
                  [org.clojure/clojure "1.10.0-alpha2"]]
   :main ^:skip-aot pho-diff.core
   :target-path "target/%s"
-  :profiles {:dev {:dependencies [[expound "0.5.0"]
+  :profiles {:dev {:source-paths ["dev"]
+                   :dependencies [[expound "0.5.0"]
                                   [orchestra "2017.11.12-1"]
                                   [org.clojure/test.check "0.10.0-alpha2"]
                                   [spec-provider "0.4.11"]]}
