@@ -2,4 +2,4 @@
   (:require [clojure.spec.alpha :as spec]))
 
 (def articulations #{"cons" "vowels"})
-(spec/def ::articulation (spec/and string? articulations))
+(spec/def ::articulation articulations)
