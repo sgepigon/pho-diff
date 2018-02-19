@@ -58,10 +58,7 @@
   TODO A bit hard-coded and ugly, but it works. Would like to parse in idiomatic
   Enlive."
   [html-data]
-  (-> (enlive/select html-data [:div.content])
-      first
-      :content
-      (nth 4)))
+  (-> (enlive/select html-data [:div.content]) first :content (nth 4)))
 
 (spec/fdef other-sounds
   :args (spec/cat :html-data ::html-data)
