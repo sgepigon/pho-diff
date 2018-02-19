@@ -3,8 +3,7 @@
   (:require [clojure.spec.alpha :as spec]
             [me.raynes.conch :as conch]
             [pho-diff.lang :as lang]
-            [pho-diff.scrape :as scrape]
-            [pho-diff.util :as util]))
+            [pho-diff.scrape :as scrape]))
 
 (conch/programs convert)
 
@@ -39,13 +38,13 @@
   found in language b are colored green. The features common to both languages
   remain in grayscale."
   ([a b articulation]
-   (diff-gif (util/->path a articulation)
-             (util/->path b articulation)
-             (util/->path a b articulation)))
+   (diff-gif (lang/->path a articulation)
+             (lang/->path b articulation)
+             (lang/->path a b articulation)))
   ([a b]
    (for [articulation lang/articulations]
      (do (diff-charts a b articulation)
-         (util/->path a b articulation)))))
+         (lang/->path a b articulation)))))
 
 (spec/fdef diff
   :args (spec/cat :a ::lang/language :b ::lang/language)
@@ -56,9 +55,9 @@
   [a b]
   ;; Are the charts already downloaded?
   (cond
-    (util/diffed? a b) (for [articulation lang/articulations]
-                         (util/->path a b articulation))
-    (and (util/inventory? a) (util/inventory? b)) (diff-charts a b)
+    (lang/diffed? a b) (for [articulation lang/articulations]
+                         (lang/->path a b articulation))
+    (and (lang/inventory? a) (lang/inventory? b)) (diff-charts a b)
     :else (do (scrape/slurp-charts a)
               (scrape/slurp-charts b)
               (diff-charts a b))))

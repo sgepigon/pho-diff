@@ -7,8 +7,7 @@
             [pho-diff.core :refer :all]
             [pho-diff.diff :as diff]
             [pho-diff.lang :as lang]
-            [pho-diff.scrape :as scrape]
-            [pho-diff.util :as util]))
+            [pho-diff.scrape :as scrape]))
 
 (orchestra/instrument)
 

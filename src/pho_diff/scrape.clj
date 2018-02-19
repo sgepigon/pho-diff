@@ -1,16 +1,30 @@
 (ns pho-diff.scrape
-  (:require [clojure.spec.alpha :as spec]
+  (:require [clojure.java.io :as io]
+            [clojure.spec.alpha :as spec]
             [clojure.string :as string]
             [net.cgrand.enlive-html :as enlive]
-            [pho-diff.lang :as lang]
-            [pho-diff.util :as util]))
+            [pho-diff.lang :as lang]))
 
 (spec/def ::html-data seq?)
 
 (def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
 (def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
-(def ^:private archive-data (util/fetch-url archive-url))
+(defn fetch-url
+  "Grab the contents of the URL specified"
+  [url]
+  (enlive/html-resource (java.net.URL. url)))
+
+(defn copy-uri-to-file
+  "Copy a URI to file
+
+  Source: https://stackoverflow.com/questions/15628682/"
+  [uri file]
+  (with-open [in (io/input-stream uri)
+              out (io/output-stream file)]
+    (io/copy in out)))
+
+(def ^:private archive-data (fetch-url archive-url))
 (def ^:private lang-data
   (let [languages (enlive/select archive-data [:div#maincontent :ul :li :a])
         name :content
@@ -23,7 +37,7 @@
 (defn- fetch-language
   "TODO Grab the contents of the language specified"
   [language]
-  (util/fetch-url (str base-url (get lang-data language))))
+  (fetch-url (str base-url (get lang-data language))))
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
@@ -45,10 +59,10 @@
   Source: https://stackoverflow.com/questions/11321264/"
   [language]
   (let [[cons-uri vowels-uri] (fetch-charts (fetch-language language))
-        cons-path (util/->path language "cons")
-        vowels-path (util/->path language "vowels")]
-    (do (util/copy-uri-to-file cons-uri cons-path) ; TODO is this idiomatic use of `do`?
-        (util/copy-uri-to-file vowels-uri vowels-path)
+        cons-path (lang/->path language "cons")
+        vowels-path (lang/->path language "vowels")]
+    (do (copy-uri-to-file cons-uri cons-path) ; TODO is this idiomatic use of `do`?
+        (copy-uri-to-file vowels-uri vowels-path)
         {:cons cons-path
          :vowels vowels-path})))
 
