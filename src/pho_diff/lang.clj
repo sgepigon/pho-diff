@@ -29,7 +29,7 @@
   :ret string?)
 
 (defn ->filename
-  "Create a file name for a language inventory or a diff of two inventories, a b"
+  "Create a file name for a language inventory or for a diff of two inventories, a b"
   ([language articulation]
    (str (->kebab language) "ipa" articulation ".gif"))
   ([a b articulation]
@@ -44,7 +44,7 @@
   :ret string?)
 
 (defn ->path
-  "Create a file path for a language inventory or an diff of two inventories, a b"
+  "Create a file path for a language inventory or for a diff of two inventories, a b"
   ([language articulation]
    (str inventory (->filename language articulation)))
   ([a b articulation]
