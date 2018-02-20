@@ -17,7 +17,7 @@
   "Replace invalid filename characters with dashes in a string, kebab-style"
   [s]
   ;; regex source: https://stackoverflow.com/a/2059612
-  (let [invalid-chars #"[^_a-zA-Z0-9\\-\\.]+"]
+  (let [invalid-chars #"[^a-zA-Z0-9\\-\\.]+"]
     (-> s string/lower-case string/trim (string/replace invalid-chars "-"))))
 
 (spec/fdef ->filename
