@@ -35,36 +35,41 @@
 (spec/def ::lang/language (set languages))
 
 (defn- fetch-language
-  "TODO Grab the contents of the language specified"
+  "Grab the HTML contents of a language"
   [language]
   (fetch-url (str base-url (get lang-data language))))
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
-  :ret (spec/coll-of string? :count 2))
+  :ret (spec/keys :req-un [::cons ::vowels]))
 
 (defn- fetch-charts
-  "Return the URLs of the IPA charts"
+  "Return a map of the IPA charts URLs
+
+  Returns `nil` if the charts are not found."
   [html-data]
-  (map (comp :src :attrs) (enlive/select html-data [:div.content :p :img])))
+  (let [[cons vowels] (map (comp :src :attrs)
+                           (enlive/select html-data [:div.content :p :img]))]
+    (when (and cons vowels)
+      {:cons cons
+       :vowels vowels})))
 
 (spec/fdef slurp-charts
   :args (spec/cat :language ::lang/language)
-  ;; TODO Do I need to write `spec/def`s for ::cons and ::vowels?
   :ret (spec/keys :req-un [::cons ::vowels]))
 
 (defn slurp-charts
   "Return a map of consonant and vowel charts for the input language
 
-  Source: https://stackoverflow.com/questions/11321264/"
+  Returns `nil` if the charts are not found. "
   [language]
-  (let [[cons-uri vowels-uri] (fetch-charts (fetch-language language))
-        cons-path (lang/->path language "cons")
-        vowels-path (lang/->path language "vowels")]
-    (do (copy-uri-to-file cons-uri cons-path) ; TODO is this idiomatic use of `do`?
-        (copy-uri-to-file vowels-uri vowels-path)
-        {:cons cons-path
-         :vowels vowels-path})))
+  (when-let [m (fetch-charts (fetch-language language))]
+    (let [cons-path (lang/->path language "cons")
+          vowels-path (lang/->path language "vowels")]
+      (do (copy-uri-to-file (:cons m) cons-path)
+          (copy-uri-to-file (:vowels m) vowels-path)
+          {:cons cons-path
+           :vowels vowels-path}))))
 
 (defn- other-sounds-str
   "Helper function for `other-sounds`
@@ -79,7 +84,10 @@
   :ret (spec/coll-of string? :kind set?))
 
 (defn- other-sounds
-  "Return a set of the phonetic features not included on the IPA chart."
+  "Return a map containing a set of the phonetic features not included on the IPA
+  chart
+
+  TODO Returns `nil` if the phonetic features are not found."
   [html-data]
   (set (map string/triml (-> (other-sounds-str html-data)
                              (string/replace #"other sounds:" "")
