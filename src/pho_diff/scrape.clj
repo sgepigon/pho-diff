@@ -11,12 +11,12 @@
 (def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
 (defn fetch-url
-  "Grab the contents of the URL specified"
+  "Grab the contents of the `URL` specified."
   [url]
   (enlive/html-resource (java.net.URL. url)))
 
 (defn copy-uri-to-file
-  "Copy a URI to file
+  "Copy a `URI` to `file`.
 
   Source: https://stackoverflow.com/questions/15628682/"
   [uri file]
@@ -35,7 +35,7 @@
 (spec/def ::lang/language (set languages))
 
 (defn- fetch-language
-  "Grab the HTML contents of a language"
+  "Grab the HTML contents of `language`."
   [language]
   (fetch-url (str base-url (get lang-data language))))
 
@@ -44,7 +44,7 @@
   :ret (spec/keys :req-un [::cons ::vowels]))
 
 (defn- fetch-charts
-  "Return a map of the IPA charts URLs
+  "Return a map of the IPA charts URLs.
 
   Returns `nil` if the charts are not found."
   [html-data]
@@ -59,9 +59,9 @@
   :ret (spec/keys :req-un [::cons ::vowels]))
 
 (defn slurp-charts
-  "Return a map of consonant and vowel charts for the input language
+  "Return a map of consonant and vowel charts for `language`.
 
-  Returns `nil` if the charts are not found. "
+  Returns `nil` if the charts are not found."
   [language]
   (when-let [m (fetch-charts (fetch-language language))]
     (let [cons-path (lang/->path language "cons")
@@ -72,7 +72,7 @@
            :vowels vowels-path}))))
 
 (defn- other-sounds-str
-  "Helper function for `other-sounds`
+  "Helper function for `other-sounds`.
 
   TODO A bit hard-coded and ugly, but it works. Would like to parse in idiomatic
   Enlive."
@@ -85,7 +85,7 @@
 
 (defn- other-sounds
   "Return a map containing a set of the phonetic features not included on the IPA
-  chart
+  chart.
 
   TODO Returns `nil` if the phonetic features are not found."
   [html-data]

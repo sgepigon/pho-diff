@@ -14,8 +14,8 @@
 (defn- diff-gif
   "Generate the diff gif for languages a.gif and b.gif.
 
-  The features only found in language a are colored red, and the features only
-  found in language b are colored green. The features common to both languages
+  The features only found in language `a` are colored red, and the features only
+  found in language `b` are colored green. The features common to both languages
   remain in grayscale."
   [a b out]
   (convert "(" b "-flatten" "-grayscale" "Rec709Luminance" ")"
@@ -32,10 +32,10 @@
   :ret any?)
 
 (defn- diff-charts
-  "Generate the diff chart for languages a and b.
+  "Generate the diff chart for languages `a` and `b`.
 
-  The features only found in language a are colored red, and the features only
-  found in language b are colored green. The features common to both languages
+  The features only found in language `a` are colored red, and the features only
+  found in language `b` are colored green. The features common to both languages
   remain in grayscale."
   ([a b articulation]
    (diff-gif (lang/->path a articulation)
@@ -51,7 +51,7 @@
   :ret any?)
 
 (defn diff
-  "TODO Implement full `diff` with `diff-charts` and `other-sounds`"
+  "TODO Implement full `diff` with `diff-charts` and `other-sounds`."
   [a b]
   ;; Are the charts already downloaded?
   (cond

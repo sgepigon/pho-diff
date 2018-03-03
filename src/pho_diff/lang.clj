@@ -14,7 +14,7 @@
   :ret string?)
 
 (defn ->kebab
-  "Replace invalid filename characters with dashes in a string, kebab-style"
+  "Replace invalid filename characters with dashes in a string `s`, kebab-style."
   [s]
   ;; regex source: https://stackoverflow.com/a/2059612
   (let [invalid-chars #"[^a-zA-Z0-9\\-\\.]+"]
@@ -29,7 +29,8 @@
   :ret string?)
 
 (defn ->filename
-  "Create a file name for a language inventory or for a diff of two inventories, a b"
+  "Create a file name for a `language` inventory or for a diff of two
+  inventories,`a` and `b`."
   ([language articulation]
    (str (->kebab language) "ipa" articulation ".gif"))
   ([a b articulation]
@@ -44,7 +45,8 @@
   :ret string?)
 
 (defn ->path
-  "Create a file path for a language inventory or for a diff of two inventories, a b"
+  "Create a file path for a `language` inventory or for a diff of two
+  inventories,`a` and `b`."
   ([language articulation]
    (str inventory (->filename language articulation)))
   ([a b articulation]
@@ -55,7 +57,7 @@
   :ret boolean?)
 
 (defn inventory?
-  "Check if the charts for a given language are already in the inventory"
+  "Check if the charts for `language` are already in the inventory."
   [language]
   (every? true? (for [articulation articulations]
                   (.exists (io/file (->path language articulation))))))
@@ -66,7 +68,7 @@
   :ret boolean?)
 
 (defn diffed?
-  "Check if two languages have already been diffed"
+  "Check if two languages `a` and `b` have already been diffed."
   [a b]
   (every? true? (for [articulation articulations]
                   (.exists (io/file (->path a b articulation))))))
