@@ -24,15 +24,16 @@
               out (io/output-stream file)]
     (io/copy in out)))
 
-(def ^:private archive-data (fetch-url archive-url))
-(def ^:private lang-data
-  (let [languages (enlive/select archive-data [:div#maincontent :ul :li :a])
-        name :content
-        id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
-    (zipmap (mapcat name languages) (map id languages))))
+(def ^:private lang-data {})
+(comment
+  (def ^:private archive-data (fetch-url archive-url))
+  (def ^:private lang-data
+    (let [languages (enlive/select archive-data [:div#maincontent :ul :li :a])
+          name :content
+          id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
+      (zipmap (mapcat name languages) (map id languages))))
 
-(def ^:private languages (sort (keys lang-data)))
-(spec/def ::lang/language (set languages))
+  (def ^:private languages (sort (keys lang-data))))
 
 (defn- fetch-language
   "Grab the HTML contents of `language`."

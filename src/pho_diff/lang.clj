@@ -1,5 +1,6 @@
 (ns pho-diff.lang
-  (:require [clojure.java.io :as io]
+  (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]
             [clojure.spec.alpha :as spec]
             [clojure.string :as string]))
 
@@ -7,7 +8,10 @@
 (def ^:private output "resources/output/")
 
 (def articulations #{"cons" "vowels"})
+(def languages (edn/read-string (slurp (str inventory "languages.edn"))))
+
 (spec/def ::articulation articulations)
+(spec/def ::language languages)
 
 (spec/fdef ->kebab
   :args (spec/cat :s string?)
