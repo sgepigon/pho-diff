@@ -72,24 +72,26 @@
            :vowels vowels-path}))))
 
 (defn- other-sounds-str
-  "Helper function for `other-sounds`.
-
-  TODO A bit hard-coded and ugly, but it works. Would like to parse in idiomatic
-  Enlive."
+  "Helper function for `other-sounds`."
   [html-data]
+  ;; TODO A bit hard-coded and ugly, but it works. Would like to parse in
+  ;; idiomatic Enlive.
   (-> (enlive/select html-data [:div.content]) first :content (nth 4)))
 
 (spec/fdef other-sounds
   :args (spec/cat :html-data ::html-data)
   :ret (spec/coll-of string? :kind set?))
 
-(defn- other-sounds
+(defn other-sounds
   "Return a map containing a set of the phonetic features not included on the IPA
   chart.
 
-  TODO Returns `nil` if the phonetic features are not found."
+  Returns `nil` if the phonetic features are not found."
   [html-data]
-  (set (map string/triml (-> (other-sounds-str html-data)
-                             (string/replace #"other sounds:" "")
-                             (string/replace #"\." "")
-                             (string/split #";")))))
+  (when-some [s (other-sounds-str html-data)]
+    {:other-sounds (->> (-> s
+                            (string/replace #"other sounds:" "")
+                            (string/replace #"\." "")
+                            (string/split #";"))
+                        (map string/triml)
+                        set)}))
