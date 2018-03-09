@@ -24,7 +24,6 @@
               out (io/output-stream file)]
     (io/copy in out)))
 
-(def ^:private lang-data {})
 (comment
   (def ^:private archive-data (fetch-url archive-url))
   (def ^:private lang-data
@@ -38,7 +37,7 @@
 (defn- fetch-language
   "Grab the HTML contents of `language`."
   [language]
-  (fetch-url (str base-url (get lang-data language))))
+  (fetch-url (str base-url (get lang/ids language))))
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)

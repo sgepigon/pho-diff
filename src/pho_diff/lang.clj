@@ -9,6 +9,7 @@
 
 (def articulations #{"cons" "vowels"})
 (def languages (edn/read-string (slurp (str inventory "languages.edn"))))
+(def ids (edn/read-string (slurp (str inventory "ids.edn"))))
 
 (spec/def ::articulation articulations)
 (spec/def ::language languages)
