@@ -41,7 +41,7 @@
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
-  :ret (spec/keys :req-un [::cons ::vowels]))
+  :ret (spec/nilable (spec/keys :req-un [::cons ::vowels])))
 
 (defn- fetch-charts
   "Return a map of the IPA charts URLs.
@@ -56,7 +56,7 @@
 
 (spec/fdef slurp-charts
   :args (spec/cat :language ::lang/language)
-  :ret (spec/keys :req-un [::cons ::vowels]))
+  :ret (spec/nilable (spec/keys :req-un [::cons ::vowels])))
 
 (defn slurp-charts
   "Return a map of consonant and vowel charts for `language`.
@@ -80,7 +80,7 @@
 
 (spec/fdef other-sounds
   :args (spec/cat :language ::lang/language)
-  :ret (spec/coll-of string? :kind set?))
+  :ret (spec/nilable (spec/keys :req-un [::other-sounds])))
 
 (defn other-sounds
   "Return a map containing a set of the phonetic features not included on the IPA
