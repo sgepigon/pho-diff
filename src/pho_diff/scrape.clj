@@ -48,12 +48,11 @@
   "Return a map of the IPA charts URLs.
 
   Returns `nil` if the charts are not found."
-  [html-data]
-  (let [[cons vowels] (map (comp :src :attrs)
-                           (enlive/select html-data [:div.content :p :img]))]
-    (when (and cons vowels)
-      {:cons cons
-       :vowels vowels})))
+  [language]
+  (when-let [[cons vowels] (seq (map (comp :src :attrs)
+                                     (enlive/select (fetch-language language)
+                                                    [:div.content :p :img])))]
+    {:cons cons :vowels vowels}))
 
 (spec/fdef slurp-charts
   :args (spec/cat :language ::lang/language)
@@ -64,7 +63,7 @@
 
   Returns `nil` if the charts are not found."
   [language]
-  (when-let [m (fetch-charts (fetch-language language))]
+  (when-let [m (fetch-charts language)]
     (let [cons-path (lang/->path language "cons")
           vowels-path (lang/->path language "vowels")]
       (do (copy-uri-to-file (:cons m) cons-path)
