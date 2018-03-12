@@ -10,12 +10,12 @@
 (def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
 (def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
-(defn fetch-url
+(defn- fetch-url
   "Grab the contents of the `URL` specified."
   [url]
   (enlive/html-resource (java.net.URL. url)))
 
-(defn copy-uri-to-file
+(defn- copy-uri-to-file
   "Copy a `URI` to `file`.
 
   Source: https://stackoverflow.com/questions/15628682/"
