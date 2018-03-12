@@ -63,11 +63,11 @@
 
   Returns `nil` if the charts are not found."
   [language]
-  (when-let [m (fetch-charts language)]
+  (when-let [{:keys [cons vowels]} (fetch-charts language)]
     (let [cons-path (lang/->path language "cons")
           vowels-path (lang/->path language "vowels")]
-      (do (copy-uri-to-file (:cons m) cons-path)
-          (copy-uri-to-file (:vowels m) vowels-path)
+      (do (copy-uri-to-file cons cons-path)
+          (copy-uri-to-file vowels vowels-path)
           {:cons cons-path
            :vowels vowels-path}))))
 
