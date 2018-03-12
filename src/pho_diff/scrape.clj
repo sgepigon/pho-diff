@@ -71,12 +71,21 @@
           {:cons cons-path
            :vowels vowels-path}))))
 
+(spec/fdef other-sounds-str
+  :args (spec/cat :language ::lang/language)
+  :ret string?)
+
 (defn- other-sounds-str
   "Helper function for `other-sounds`."
   [language]
   ;; TODO A bit hard-coded and ugly, but it works. Would like to parse in
   ;; idiomatic Enlive.
-  (-> (fetch-language language) (enlive/select [:div.content]) first :content (nth 4 nil)))
+  (when-let [sounds (-> (fetch-language language)
+                        (enlive/select [:div.content])
+                        first
+                        :content
+                        (nth 4 nil))]
+    (when (string? sounds) sounds)))
 
 (spec/fdef other-sounds
   :args (spec/cat :language ::lang/language)
