@@ -25,14 +25,15 @@
     (io/copy in out)))
 
 (comment
-  (def ^:private archive-data (fetch-url archive-url))
-  (def ^:private lang-data
-    (let [languages (enlive/select archive-data [:div#maincontent :ul :li :a])
-          name :content
-          id #(re-find #"\d+" (first (enlive/attr-values % :href)))]
-      (zipmap (mapcat name languages) (map id languages))))
-
-  (def ^:private languages (sort (keys lang-data))))
+  (let [archive (fetch-url archive-url)
+        languages (enlive/select archive [:div#maincontent :ul :li :a])
+        name :content
+        id #(re-find #"\d+" (first (enlive/attr-values % :href)))
+        names (mapcat name languages)
+        name->id (zipmap names (map id languages))]
+    (binding [*print-length* false]     ; print the full map or set
+      (do (spit "resources/inventory/ids.edn" (pr-str name->id))
+          (spit "resources/inventory/languages.edn" (pr-str (set names)))))))
 
 (defn- fetch-language
   "Grab the HTML contents of `language`."
