@@ -73,13 +73,13 @@
 
 (defn- other-sounds-str
   "Helper function for `other-sounds`."
-  [html-data]
+  [language]
   ;; TODO A bit hard-coded and ugly, but it works. Would like to parse in
   ;; idiomatic Enlive.
-  (-> (enlive/select html-data [:div.content]) first :content (nth 4)))
+  (-> (fetch-language language) (enlive/select [:div.content]) first :content (nth 4 nil)))
 
 (spec/fdef other-sounds
-  :args (spec/cat :html-data ::html-data)
+  :args (spec/cat :language ::lang/language)
   :ret (spec/coll-of string? :kind set?))
 
 (defn other-sounds
@@ -87,8 +87,8 @@
   chart.
 
   Returns `nil` if the phonetic features are not found."
-  [html-data]
-  (when-some [s (other-sounds-str html-data)]
+  [language]
+  (when-let [s (other-sounds-str language)]
     {:other-sounds (->> (-> s
                             (string/replace #"other sounds:" "")
                             (string/replace #"\." "")
