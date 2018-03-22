@@ -35,7 +35,7 @@
       (do (spit "resources/inventory/ids.edn" (pr-str name->id))
           (spit "resources/inventory/languages.edn" (pr-str (set names)))))))
 
-(defn- fetch-language
+(defn- fetch-language!
   "Grab the HTML contents of `language`."
   [language]
   (fetch-url (str base-url (get lang/ids language))))
@@ -50,7 +50,7 @@
   Returns `nil` if the charts are not found."
   [language]
   (when-let [[cons vowels] (seq (map (comp :src :attrs)
-                                     (enlive/select (fetch-language language)
+                                     (enlive/select (fetch-language! language)
                                                     [:div.content :p :img])))]
     {:cons cons :vowels vowels}))
 
@@ -79,8 +79,8 @@
   "Helper function for `other-sounds`."
   [language]
   ;; TODO A bit hard-coded and ugly, but it works. Would like to parse in
-  ;; idiomatic Enlive.
-  (when-let [sounds (-> (fetch-language language)
+  ;; idiomatic Enlive. Maybe a zipper could work here...
+  (when-let [sounds (-> (fetch-language! language)
                         (enlive/select [:div.content])
                         first
                         :content
