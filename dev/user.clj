@@ -15,7 +15,7 @@
 (alter-var-root #'spec/*explain-out* (constantly (expound/custom-printer
                                                   {:show-valid-values? true})))
 
-(defn restrument!
+(defn restrument
   "Re-instrument all functions
 
   Hooked into `cider-refresh`."
