@@ -97,10 +97,10 @@
 
   Returns `nil` if the phonetic features are not found."
   [language]
-  (when-let [s (other-sounds-str language)]
-    {:other-sounds (->> (-> s
-                            (string/replace #"other sounds:" "")
-                            (string/replace #"\." "")
-                            (string/split #";"))
-                        (map string/triml)
-                        set)}))
+  (some-> (other-sounds-str language)
+          (string/replace #"other sounds:" "")
+          (string/replace #"\." "")
+          (string/split #";")
+          (->> (map string/triml)
+               set
+               (assoc {} :other-sounds))))
