@@ -5,6 +5,8 @@
             [net.cgrand.enlive-html :as enlive]
             [pho-diff.lang :as lang]))
 
+;; `seq?` is just a placeholder for `::html-data`. It's not robust enough to
+;; generate specs, but it's good enough for my purposes.
 (spec/def ::html-data seq?)
 
 (def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
