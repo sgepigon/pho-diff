@@ -49,9 +49,10 @@
 
   Returns `nil` if the charts are not found."
   [language]
-  (when-let [[cons vowels] (seq (map (comp :src :attrs)
-                                     (enlive/select (fetch-language! language)
-                                                    [:div.content :p :img])))]
+  (when-let [[cons vowels] (-> (fetch-language! language)
+                               (enlive/select [:div.content :p :img])
+                               (->> (map (comp :src :attrs)))
+                               seq)]
     {:cons cons :vowels vowels}))
 
 (spec/fdef slurp-charts
