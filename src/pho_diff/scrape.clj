@@ -80,12 +80,13 @@
   [language]
   ;; TODO A bit hard-coded and ugly, but it works. Would like to parse in
   ;; idiomatic Enlive. Maybe a zipper could work here...
-  (when-let [sounds (-> (fetch-language! language)
-                        (enlive/select [:div.content])
-                        first
-                        :content
-                        (nth 4 nil))]
-    (when (string? sounds) sounds)))
+  (some-> (fetch-language! language)
+          (enlive/select [:div.content])
+          first
+          :content
+          (nth 4 nil)
+          ;; Return iff string?. e.g. "greek" returns a map so return `nil` instead.
+          (#(when (string? %) %))))
 
 (spec/fdef other-sounds
   :args (spec/cat :language ::lang/language)
