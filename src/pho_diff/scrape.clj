@@ -74,7 +74,7 @@
 
 (spec/fdef other-sounds-str
   :args (spec/cat :language ::lang/language)
-  :ret string?)
+  :ret (spec/nilable string?))
 
 (defn- other-sounds-str
   "Helper function for `other-sounds`."
