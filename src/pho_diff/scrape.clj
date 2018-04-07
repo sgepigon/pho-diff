@@ -91,7 +91,7 @@
 
 (spec/fdef other-sounds
   :args (spec/cat :language ::lang/language)
-  :ret (spec/nilable (spec/keys :req-un [::other-sounds])))
+  :ret (spec/nilable (spec/keys :req-un [::lang/other-sounds])))
 
 (defn other-sounds
   "Return a map containing a set of the phonetic features not included on the IPA

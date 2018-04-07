@@ -13,6 +13,7 @@
 
 (spec/def ::articulation articulations)
 (spec/def ::language languages)
+(spec/def ::other-sounds (spec/coll-of string? :kind set?))
 
 (spec/fdef ->kebab
   :args (spec/cat :s string?)
