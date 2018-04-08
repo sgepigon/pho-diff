@@ -23,10 +23,15 @@
   (orchestra/instrument))
 
 (defn check-result
-  "Return the results of `spec.test/check` on `sym-or-syms`
+  "Return the results of `spec.test/check` on `sym` given `num-tests` (default
+  1000).
 
-  TODO The result is currently nested too deep and `spec.test/abbrev-result` is
-  not working, see CLJ-2246 for more details:
-  https://dev.clojure.org/jira/browse/CLJ-2246"
-  [sym-or-syms]
-  (-> (spec.test/check sym-or-syms) first second second))
+  See `spec.test/check` for options and return. Inspired by/lifted from
+  https://clojureverse.org/t/1448,
+  https://stackoverflow.com/questions/40697841/, and
+  https://dev.clojure.org/jira/browse/CLJ-2246."
+  ([sym num-tests]
+   (let [check-opts {:clojure.spec.test.check/opts {:num-tests num-tests}}]
+     (-> (spec.test/check sym check-opts) first :clojure.spec.test.check/ret)))
+  ([sym]
+   (-> (spec.test/check sym) first :clojure.spec.test.check/ret)))
