@@ -7,5 +7,6 @@
     (is (= (scrape/other-sounds "english")
            {:other-sounds #{"labio-velar voiced central approximant [w]"
                             "5 diphthongs"}})))
-  (testing "The \"greek\" returns a map instead of other sounds (or `nil`)."
+  (testing "\"greek\" returns `nil` (earlier implementations incorrectly
+  returned a map)."
     (is (nil? (scrape/other-sounds "greek")))))
