@@ -53,8 +53,7 @@
   [language]
   (when-let [[cons vowels] (-> (fetch-language! language)
                                (enlive/select [:div.content :p :img])
-                               (->> (map (comp :src :attrs)))
-                               seq)]
+                               (->> (mapv (comp :src :attrs))))]
     {:cons cons :vowels vowels}))
 
 (spec/fdef slurp-charts
