@@ -7,11 +7,11 @@
 
 (deftest other-sounds-test
   (testing "English has a non-`nil` other sounds."
-    (is (= (scrape/other-sounds "english")
-           {:other-sounds #{"labio-velar voiced central approximant [w]"
-                            "5 diphthongs"}})))
+    (is (= (:other-sounds (scrape/summary "english"))
+           #{"labio-velar voiced central approximant [w]"
+             "5 diphthongs"})))
   (testing "\"greek\" returns `nil` (earlier implementations incorrectly
   returned a map)."
-    (is (nil? (scrape/other-sounds "greek"))))
+    (is (nil? (:other-sounds (scrape/summary "greek")))))
   (testing "Generative testing via spec. There are 369 languages."
     (is (nil? (:false (user/check-result `scrape/other-sounds 369))))))
