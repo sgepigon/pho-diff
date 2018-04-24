@@ -61,7 +61,7 @@
                   :html-data ::html-data)
   :ret (spec/nilable (spec/keys :req-un [::cons ::vowels])))
 
-(defn slurp-charts
+(defn- slurp-charts
   "Return a map of consonant and vowel charts for `language`.
 
   Returns `nil` if the charts are not found."
@@ -95,7 +95,7 @@
   :args (spec/cat :html-data ::html-data)
   :ret (spec/nilable (spec/keys :req-un [::lang/other-sounds])))
 
-(defn other-sounds
+(defn- other-sounds
   "Return a map containing a set of the phonetic features not included on the IPA
   chart.
 
