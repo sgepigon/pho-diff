@@ -50,22 +50,23 @@
   "Return a map of the IPA charts URLs.
 
   Returns `nil` if the charts are not found."
-  [language]
-  (when-let [[cons vowels] (-> (fetch-language! language)
+  [html-data]
+  (when-let [[cons vowels] (-> html-data
                                (enlive/select [:div.content :p :img])
                                (->> (mapv (comp :src :attrs))))]
     {:cons cons :vowels vowels}))
 
 (spec/fdef slurp-charts
-  :args (spec/cat :language ::lang/language)
+  :args (spec/cat :language ::lang/language
+                  :html-data ::html-data)
   :ret (spec/nilable (spec/keys :req-un [::cons ::vowels])))
 
 (defn slurp-charts
   "Return a map of consonant and vowel charts for `language`.
 
   Returns `nil` if the charts are not found."
-  [language]
-  (when-let [{:keys [cons vowels]} (fetch-charts language)]
+  [language html-data]
+  (when-let [{:keys [cons vowels]} (fetch-charts html-data)]
     (let [cons-path (lang/->path language "cons")
           vowels-path (lang/->path language "vowels")]
       (do (copy-uri-to-file cons cons-path)
@@ -74,15 +75,15 @@
            :vowels vowels-path}))))
 
 (spec/fdef other-sounds-str
-  :args (spec/cat :language ::lang/language)
+  :args (spec/cat :html-data ::html-data)
   :ret (spec/nilable string?))
 
 (defn- other-sounds-str
   "Helper function for `other-sounds`."
-  [language]
+  [html-data]
   ;; TODO A bit hard-coded and ugly, but it works. Would like to parse in
   ;; idiomatic Enlive. Maybe a zipper could work here...
-  (some-> (fetch-language! language)
+  (some-> html-data
           (enlive/select [:div.content])
           first
           :content
@@ -91,7 +92,7 @@
           (#(when (string? %) %))))
 
 (spec/fdef other-sounds
-  :args (spec/cat :language ::lang/language)
+  :args (spec/cat :html-data ::html-data)
   :ret (spec/nilable (spec/keys :req-un [::lang/other-sounds])))
 
 (defn other-sounds
@@ -99,8 +100,8 @@
   chart.
 
   Returns `nil` if the phonetic features are not found."
-  [language]
-  (some-> (other-sounds-str language)
+  [html-data]
+  (some-> (other-sounds-str html-data)
           (string/replace #"other sounds:" "")
           (string/replace #"\." "")
           (string/split #";")
@@ -118,5 +119,6 @@
   TODO See if I can let the `fetch-language!` be a local var so I can save time
   and space."
   [language]
-  {:other-sounds (other-sounds language)
-   :chart (slurp-charts language)})
+  (when-let [html-data (fetch-language! language)]
+    (merge {:charts (slurp-charts language html-data)}
+           (other-sounds html-data))))
