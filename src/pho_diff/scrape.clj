@@ -109,7 +109,8 @@
 
 (spec/fdef summary
   :args (spec/cat :language ::lang/language)
-  :ret map?)                            ; FIXME spec the return map of `summary`
+  ;; FIXME spec the return map of `summary`
+  :ret (spec/nilable (spec/keys :req-un [::charts ::other-sounds])))
 
 (defn summary
   "TODO Return a map with all the information about the `langauge`.
