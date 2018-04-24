@@ -93,11 +93,10 @@
 
 (spec/fdef other-sounds
   :args (spec/cat :html-data ::html-data)
-  :ret (spec/nilable (spec/keys :req-un [::lang/other-sounds])))
+  :ret (spec/nilable ::lang/other-sounds))
 
 (defn- other-sounds
-  "Return a map containing a set of the phonetic features not included on the IPA
-  chart.
+  "Return the set of the phonetic features not included on the IPA chart.
 
   Returns `nil` if the phonetic features are not found."
   [html-data]
@@ -106,8 +105,7 @@
           (string/replace #"\." "")
           (string/split #";")
           (->> (map string/triml)
-               set
-               (assoc {} :other-sounds))))
+               set)))
 
 (spec/fdef summary
   :args (spec/cat :language ::lang/language)
@@ -120,5 +118,5 @@
   and space."
   [language]
   (when-let [html-data (fetch-language! language)]
-    (merge {:charts (slurp-charts language html-data)}
-           (other-sounds html-data))))
+    {:charts (slurp-charts language html-data)
+     :other-sounds (other-sounds html-data)}))
