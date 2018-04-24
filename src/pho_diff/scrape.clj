@@ -107,3 +107,16 @@
           (->> (map string/triml)
                set
                (assoc {} :other-sounds))))
+
+(spec/fdef summary
+  :args (spec/cat :language ::lang/language)
+  :ret map?)                            ; FIXME spec the return map of `summary`
+
+(defn summary
+  "TODO Return a map with all the information about the `langauge`.
+
+  TODO See if I can let the `fetch-language!` be a local var so I can save time
+  and space."
+  [language]
+  {:other-sounds (other-sounds language)
+   :chart (slurp-charts language)})
