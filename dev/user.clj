@@ -13,7 +13,8 @@
 
 ;; https://oli.me.uk/2017/10/18/taming-clojure-spec-with-expound/
 (alter-var-root #'spec/*explain-out* (constantly (expound/custom-printer
-                                                  {:show-valid-values? true})))
+                                                  {:show-valid-values? true
+                                                   :theme :figwheel-theme})))
 
 (defn restrument
   "Re-instrument all functions
