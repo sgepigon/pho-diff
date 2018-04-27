@@ -5,10 +5,15 @@
             [pho-diff.lang :as lang]
             [pho-diff.scrape :as scrape]))
 
+;; `string?` is just a placeholder for `::gif`. It's not robust enough to
+;; generate specs, but it's good enough for my purposes. Might create a proper
+;; gif filename generator, but not a priority.
+(spec/def ::gif string?)
+
 (conch/programs convert)
 
 (spec/fdef diff-gif
-  :args (spec/cat :a string? :b string? :out string?)
+  :args (spec/cat :a ::gif :b ::gif :out ::gif)
   :ret any?)
 
 (defn- diff-gif
