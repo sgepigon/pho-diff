@@ -61,10 +61,11 @@
   [a b]
   ;; Are the charts already downloaded?
   (cond
-    (lang/diffed? a b) (merge {:cons (lang/->path a b "cons")
-                               :vowels (lang/->path a b "vowels")}
-                              {:other-sounds {(keyword a) (scrape/other-sounds a)
-                                              (keyword b) (scrape/other-sounds b)}})
+    (lang/diffed? a b) {:charts {:cons (lang/->path a b "cons")
+                                 :vowels (lang/->path a b "vowels")}
+                        :other-sounds {:a (:other-sounds (scrape/summary a))
+                                       :b (:other-sounds (scrape/summary b))}}
     (and (lang/inventory? a) (lang/inventory? b)) (diff-charts a b)
-    :else (when (and (scrape/slurp-charts a) (scrape/slurp-charts b))
+    :else (when (and (:slurp-charts (scrape/summary a))
+                     (:slurp-charts (scrape/summary b)))
             ((diff-charts a b)))))
