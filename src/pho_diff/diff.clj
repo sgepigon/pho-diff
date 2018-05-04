@@ -69,3 +69,20 @@
     :else (when (and (:slurp-charts (scrape/summary a))
                      (:slurp-charts (scrape/summary b)))
             ((diff-charts a b)))))
+
+(spec/fdef summary
+  :args (spec/cat :a ::lang/language
+                  :b ::lang/language)
+  ;; FIXME spec the return map of `summary`
+  :ret (spec/nilable (spec/keys :req-un [::charts ::other-sounds])))
+
+(defn summary
+  "diff the `summary` of languages `a` and `b`.
+
+  TODO potentially make this the default `diff` algorithm."
+  [a b]
+  (let [ma (scrape/summary a)
+        mb (scrape/summary b)]
+    {:charts (diff-charts a b)
+     :other-sounds {:a (:other-sounds ma)
+                    :b (:other-sounds mb)}}))
