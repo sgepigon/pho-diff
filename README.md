@@ -2,9 +2,11 @@
 
 Visually compare the phonetic inventories of two languages.
 
-# Why?
+# Motivation
 
-When learning a new language, you need to know the new sounds: the ones that aren't a part of your native sound system. I wanted a tool to quickly compare the different sounds of two languages. `pho-diff` presents two languages in the form of a [diff](https://en.wikipedia.org/wiki/Diff_utility) of their [IPA charts](https://www.internationalphoneticassociation.org/content/full-ipa-chart). Given two languages `a` and `b`, if a letter (which represents a distinctive sound) is absent in `b`'s chart but present in `a`'s, it's colored green. Likewise, if a letter is absent in `a` but present in `b`, it's colored red (see [Examples](#examples)).
+When learning a new language, you need to know the new sounds: the ones that aren't a part of your native sound system. I wanted a tool to quickly compare the different sounds of two languages. `pho-diff` presents two languages in the form of a [diff](https://en.wikipedia.org/wiki/Diff_utility) of their [IPA charts](https://www.internationalphoneticassociation.org/content/full-ipa-chart).
+
+Given two languages `a` and `b`, if a letter (which represents a distinctive sound) is absent in `b`'s chart but present in `a`'s, it's colored green. Likewise, if a letter is absent in `a` but present in `b`, it's colored red (see [Examples](#examples)). It also outputs a Clojure map with additional information (other sounds not on the chart, links to the source URLs, etc.).
 
 # Resources
 
