@@ -15,10 +15,14 @@ When learning a new language, you need to know the new sounds: the ones that are
 
 Download from https://github.com/sgepigon/pho-diff.
 
+```
+git clone https://github.com/sgepigon/pho-diff.git
+```
+
 ## Usage
 
 ```
-java -jar pho-diff-0.1.0-standalone.jar "a" "b"
+lein run "a" "b"
 ```
 
 `a` and `b` should be languages from the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php). See [Bugs](#bugs) for caveats.
