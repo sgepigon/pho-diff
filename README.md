@@ -55,12 +55,17 @@ lein run "english" "tagalog"
 
 Not all languages listed on the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) have an inventory chart. Instead, the pages say "Coming soon..." If either languages `a` or `b` lack an IPA chart, `pho-diff` will throw an error.
 
-There are some languages that do have IPA charts, but are slightly off, e.g. "[yupik](http://accent.gmu.edu/browse_native.php?function=detail&languageid=202)", "[mandinka](http://accent.gmu.edu/browse_native.php?function=detail&languageid=240)", and "[swiss german](http://accent.gmu.edu/browse_native.php?function=detail&languageid=197)". This results in ugly diffs:
+There are some languages that do have IPA charts, but are slightly off, e.g. "[yupik](http://accent.gmu.edu/browse_native.php?function=detail&languageid=202)", "[mandinka](http://accent.gmu.edu/browse_native.php?function=detail&languageid=240)", and "[swiss german](http://accent.gmu.edu/browse_native.php?function=detail&languageid=197)". This misalignment results in ugly diffs:
 
 ![English-Mandinka Consonant Chart](resources/README/english-mandinka-cons.gif "English-Mandinka Consonant Chart")
 ![English-Mandinka Vowel Chart](resources/README/english-mandinka-vowels.gif "English-Mandinka Vowel Chart")
 
 The diff is usable, but still an eyesore.
+
+## Built With
+
+  * [Clojure](https://clojure.org/) -- Written in Clojure
+  * [ImageMagick](https://www.imagemagick.org/) -- Uses the [convert](https://www.imagemagick.org/script/convert.php) program to create the diffs
 
 ## License
 
