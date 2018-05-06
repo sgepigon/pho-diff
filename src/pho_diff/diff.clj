@@ -83,6 +83,9 @@
   [a b]
   (let [ma (scrape/summary a)
         mb (scrape/summary b)]
-    {:charts (diff-charts a b)
+    {:keys [:a a :b b]
+     :charts (diff-charts a b)
      :other-sounds {:a (:other-sounds ma)
-                    :b (:other-sounds mb)}}))
+                    :b (:other-sounds mb)}
+     :sources {:a (:source ma)
+               :b (:source mb)}}))

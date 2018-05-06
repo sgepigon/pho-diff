@@ -37,10 +37,15 @@
       (do (spit "resources/inventory/ids.edn" (pr-str name->id))
           (spit "resources/inventory/languages.edn" (pr-str (set names)))))))
 
+(defn- ->url
+  "Return the URL of the language in the Speech Accent Archive."
+  [language]
+  (str base-url (get lang/ids language)))
+
 (defn- fetch-language!
   "Grab the HTML contents of `language`."
   [language]
-  (fetch-url (str base-url (get lang/ids language))))
+  (->> language ->url fetch-url))
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
@@ -120,4 +125,5 @@
   [language]
   (when-let [html-data (fetch-language! language)]
     {:charts (slurp-charts language html-data)
-     :other-sounds (other-sounds html-data)}))
+     :other-sounds (other-sounds html-data)
+     :source (->url language)}))
