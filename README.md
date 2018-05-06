@@ -4,11 +4,11 @@ Visually compare the phonetic inventories of two languages.
 
 # Why?
 
-When learning a new language, you need to know the new sounds---the sounds that aren't a part of your native sound systems. I wanted a tool to quickly compare the different sounds of two languages. `pho-diff` presents two languages in the form of a `diff` of their [IPA charts](https://www.internationalphoneticassociation.org/content/full-ipa-chart). Given two languages `a` and `b`, if a symbol is absent in `b` but present in `a`, it's colored green. Likewise, if a symbol is absent in `a` but present in `b`, it's colored red (see [Examples](#examples)).
+When learning a new language, you need to know the new sounds: the ones that aren't a part of your native sound system. I wanted a tool to quickly compare the different sounds of two languages. `pho-diff` presents two languages in the form of a [diff](https://en.wikipedia.org/wiki/Diff_utility) of their [IPA charts](https://www.internationalphoneticassociation.org/content/full-ipa-chart). Given two languages `a` and `b`, if a letter (which represents a distinctive sound) is absent in `b`'s chart but present in `a`'s, it's colored green. Likewise, if a letter is absent in `a` but present in `b`, it's colored red (see [Examples](#examples)).
 
 # Resources
 
-  * The set of native language phonetic inventories are from the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php). (you can read more about the project [here](http://accent.gmu.edu/about.php).)
+  * The set of native language phonetic inventories are from the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) (you can read more about the project [here](http://accent.gmu.edu/about.php)).
   * [Interactive IPA Chart](http://www.ipachart.com/)
 
 ## Installation
@@ -18,15 +18,15 @@ Download from https://github.com/sgepigon/pho-diff.
 ## Usage
 
 ```
-java -jar pho-diff-0.1.0-standalone.jar a b
+java -jar pho-diff-0.1.0-standalone.jar "a" "b"
 ```
 
-`a` and `b` should be languages from the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php).
+`a` and `b` should be languages from the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php). See [Bugs](#bugs) for caveats.
 
 ## Examples
 
 ```
-lein run english tagalog
+lein run "english" "tagalog"
 ```
 
 ```clojure
@@ -44,9 +44,19 @@ lein run english tagalog
   "http://accent.gmu.edu/browse_native.php?function=detail&languageid=64"}}
 ```
 
-![Consonant Diff Chart](resources/README/english-tagalog-cons.gif)
-![Vowel Diff Chart](resources/README/english-tagalog-vowels.gif)
+![Consonant Diff Chart](resources/README/english-tagalog-cons.gif "English-Tagalog Consonant Chart")
+![Vowel Diff Chart](resources/README/english-tagalog-vowels.gif "English-Tagalog Vowel Chart")
 
+### Bugs
+
+Not all languages listed on the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) have an inventory chart. Instead, the pages say "Coming soon..." If either languages `a` or `b` lack an IPA chart, `pho-diff` will throw an error.
+
+There are some languages that do have IPA charts, but are slightly off, e.g. "[yupik](http://accent.gmu.edu/browse_native.php?function=detail&languageid=202)", "[mandinka](http://accent.gmu.edu/browse_native.php?function=detail&languageid=240)", and "[swiss german](http://accent.gmu.edu/browse_native.php?function=detail&languageid=197)". This results in ugly diffs:
+
+![English-Mandinka Consonant Chart](resources/README/english-mandinka-cons.gif "English-Mandinka Consonant Chart")
+![English-Mandinka Vowel Chart](resources/README/english-mandinka-vowels.gif "English-Mandinka Vowel Chart")
+
+The diff is usable, but still an eyesore.
 
 ## License
 
