@@ -42,11 +42,6 @@
   [language]
   (str base-url (get lang/ids language)))
 
-(defn- fetch-language!
-  "Grab the HTML contents of `language`."
-  [language]
-  (->> language ->url fetch-url))
-
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
   :ret (spec/nilable (spec/keys :req-un [::cons ::vowels])))
@@ -118,12 +113,9 @@
   :ret (spec/nilable (spec/keys :req-un [::charts ::other-sounds])))
 
 (defn summary
-  "TODO Return a map with all the information about the `langauge`.
-
-  TODO See if I can let the `fetch-language!` be a local var so I can save time
-  and space."
+  "TODO Return a map with all the information about the `langauge`."
   [language]
-  (when-let [html-data (fetch-language! language)]
+  (when-let [html-data (->> language ->url fetch-url)]
     {:charts (slurp-charts language html-data)
      :other-sounds (other-sounds html-data)
      :source (->url language)}))
