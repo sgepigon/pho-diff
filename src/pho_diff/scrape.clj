@@ -26,16 +26,19 @@
               out (io/output-stream file)]
     (io/copy in out)))
 
-(comment
-  (when-let [archive (fetch-url archive-url)
-             languages (enlive/select archive [:div#maincontent :ul :li :a])
-             name :content
-             id #(re-find #"\d+" (first (enlive/attr-values % :href)))
-             names (mapcat name languages)
-             name->id (zipmap names (map id languages))]
-    (binding [*print-length* false]     ; print the full map or set
-      (do (spit "resources/inventory/ids.edn" (pr-str name->id))
-          (spit "resources/inventory/languages.edn" (pr-str (set names)))))))
+(defn inventory!
+  "Scrape the language names and name->id map and write to files to `path`."
+  [path]
+  (let [archive (fetch-url archive-url)
+        languages (enlive/select archive [:div#maincontent :ul :li :a])
+        name :content
+        id #(re-find #"\d+" (first (enlive/attr-values % :href)))
+        names (mapcat name languages)
+        name->id (zipmap names (map id languages))]
+    ;; print the full map or set to file
+    (binding [*print-length* false]
+      (do (spit (io/file path "languages.edn") (pr-str (set names)))
+          (spit (io/file path "ids.edn") (pr-str name->id))))))
 
 (defn- ->url
   "Return the URL of the language in the Speech Accent Archive."
