@@ -15,6 +15,16 @@
 (spec/def ::language languages)
 (spec/def ::other-sounds (spec/coll-of string? :kind set?))
 
+(spec/fdef ->url
+  :args (spec/cat :language ::language)
+  :ret string?)
+
+(defn- ->url
+  "Return the URL of the language in the Speech Accent Archive."
+  [language]
+  (let [base "http://accent.gmu.edu/browse_native.php?function=detail&languageid="]
+    (str base (get ids language))))
+
 (spec/fdef ->kebab
   :args (spec/cat :s string?)
   :ret string?)

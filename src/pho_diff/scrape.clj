@@ -10,7 +10,6 @@
 (spec/def ::html-data seq?)
 
 (def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
-(def ^:private base-url "http://accent.gmu.edu/browse_native.php?function=detail&languageid=")
 
 (defn- fetch-url
   "Grab the contents of the `URL` specified."
@@ -39,11 +38,6 @@
     (binding [*print-length* false]
       (do (spit (io/file path "languages.edn") (pr-str (set names)))
           (spit (io/file path "ids.edn") (pr-str name->id))))))
-
-(defn- ->url
-  "Return the URL of the language in the Speech Accent Archive."
-  [language]
-  (str base-url (get lang/ids language)))
 
 (spec/fdef fetch-charts
   :args (spec/cat :html-data ::html-data)
@@ -118,7 +112,7 @@
 (defn summary
   "TODO Return a map with all the information about the `langauge`."
   [language]
-  (when-let [html-data (->> language ->url fetch-url)]
+  (when-let [html-data (->> language lang/->url fetch-url)]
     {:charts (slurp-charts language html-data)
      :other-sounds (other-sounds html-data)
-     :source (->url language)}))
+     :source (lang/->url language)}))
