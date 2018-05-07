@@ -10,7 +10,7 @@ Given two languages `a` and `b`, if a letter (which represents a distinctive sou
 
 # Resources
 
-  * The set of native language phonetic inventories are from the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) (you can read more about the project [here](http://accent.gmu.edu/about.php)).
+  * The [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) provides the set of native language phonetic inventories (you can read more about the project [here](http://accent.gmu.edu/about.php)).
   * [Interactive IPA Chart](http://www.ipachart.com/)
 
 ## Installation
