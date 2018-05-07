@@ -74,7 +74,7 @@
   :args (spec/cat :a ::lang/language
                   :b ::lang/language)
   ;; FIXME spec the return map of `summary`
-  :ret (spec/nilable (spec/keys :req-un [::charts ::other-sounds])))
+  :ret (spec/nilable (spec/keys :req-un [::charts ::other-sounds ::sources])))
 
 (defn summary
   "diff the `summary` of languages `a` and `b`.
