@@ -47,10 +47,8 @@
         (lang/->path b articulation)
         (lang/->path a b articulation)))
   ([a b]
-   (do (doseq [articulation lang/articulations]
-         (charts a b articulation))
-       {:cons (lang/->path a b "cons")
-        :vowels (lang/->path a b "vowels")})))
+   (do (doseq [articulation lang/articulations] (charts a b articulation))
+       (lang/->map a b))))
 
 (spec/fdef diff
   :args (spec/cat :a ::lang/language :b ::lang/language)
@@ -61,8 +59,7 @@
   [a b]
   ;; Are the charts already downloaded?
   (cond
-    (lang/diffed? a b) {:charts {:cons (lang/->path a b "cons")
-                                 :vowels (lang/->path a b "vowels")}
+    (lang/diffed? a b) {:charts (lang/->map a b)
                         :other-sounds {:a (:other-sounds (scrape/summary a))
                                        :b (:other-sounds (scrape/summary b))}}
     (and (lang/inventory? a) (lang/inventory? b)) (charts a b)

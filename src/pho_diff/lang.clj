@@ -68,6 +68,17 @@
   ([a b articulation]
    (str output (->filename a b articulation))))
 
+(spec/fdef ->map
+  :args (spec/cat :a ::language :b ::language)
+  :ret (spec/keys :req-un [::cons ::vowels]))
+
+(defn ->map
+  "Return a map of the file paths of the consonant and vowel diff of languages
+  `a`and`b`."
+  [a b]
+  {:cons (->path a b "cons")
+   :vowels (->path a b "vowels")})
+
 (spec/fdef inventory?
   :args (spec/cat :language ::language)
   :ret boolean?)
