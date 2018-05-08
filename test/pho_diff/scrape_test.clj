@@ -29,6 +29,12 @@
              "5 diphthongs"})))
   (testing "\"greek\" returns `nil` (earlier implementations incorrectly
   returned a map)."
-    (is (nil? (:other-sounds (scrape/summary "greek")))))
+    (is (nil? (:other-sounds (scrape/summary "greek"))))))
+
+(deftest summary-generative-test
   (testing "Generative testing via spec. There are 369 languages."
-    (is (nil? (:false (user/check-result `scrape/summary 369))))))
+    (let [{:keys [result result-data fail shrunk]} (user/check-result `scrape/summary 369)]
+      (is result (str {:fail fail
+                       :shrunk (:smallest shrunk)
+                       :result-data result-data})))))
+
