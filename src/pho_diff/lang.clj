@@ -19,7 +19,7 @@
   :args (spec/cat :language ::language)
   :ret string?)
 
-(defn- ->url
+(defn ->url
   "Return the URL of the language in the Speech Accent Archive."
   [language]
   (let [base "http://accent.gmu.edu/browse_native.php?function=detail&languageid="]
