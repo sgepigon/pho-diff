@@ -12,12 +12,12 @@
 
 (conch/programs convert)
 
-(spec/fdef diff-gif
+(spec/fdef gif
   :args (spec/cat :a ::gif :b ::gif :out ::gif)
   :ret any?)
 
-(defn- diff-gif
-  "Generate the diff gif for languages a.gif and b.gif.
+(defn- gif
+  "Generate the diff of gifs `a` and `b`.
 
   The features only found in language `a` are colored red, and the features only
   found in language `b` are colored green. The features common to both languages
@@ -28,7 +28,7 @@
            "(" "-clone" "0-1" "-compose" "darken" "-composite" ")"
            "-channel" "RGB" "-combine" out))
 
-(spec/fdef diff-charts
+(spec/fdef charts
   :args (spec/alt :single-chart (spec/cat :a ::lang/language
                                           :b ::lang/language
                                           :articulation ::lang/articulation)
@@ -36,19 +36,19 @@
                                          :b ::lang/language))
   :ret any?)
 
-(defn- diff-charts
-  "Generate the diff chart for languages `a` and `b`.
+(defn- charts
+  "Generate the diff of the IPA charts for languages `a` and `b`.
 
   The features only found in language `a` are colored red, and the features only
   found in language `b` are colored green. The features common to both languages
   remain in grayscale."
   ([a b articulation]
-   (diff-gif (lang/->path a articulation)
-             (lang/->path b articulation)
-             (lang/->path a b articulation)))
+   (gif (lang/->path a articulation)
+        (lang/->path b articulation)
+        (lang/->path a b articulation)))
   ([a b]
    (do (doseq [articulation lang/articulations]
-         (diff-charts a b articulation))
+         (charts a b articulation))
        {:cons (lang/->path a b "cons")
         :vowels (lang/->path a b "vowels")})))
 
@@ -57,7 +57,7 @@
   :ret any?)
 
 (defn diff
-  "TODO Implement full `diff` with `diff-charts` and `other-sounds`."
+  "TODO Implement full `diff` with `charts` and `other-sounds`."
   [a b]
   ;; Are the charts already downloaded?
   (cond
@@ -65,10 +65,10 @@
                                  :vowels (lang/->path a b "vowels")}
                         :other-sounds {:a (:other-sounds (scrape/summary a))
                                        :b (:other-sounds (scrape/summary b))}}
-    (and (lang/inventory? a) (lang/inventory? b)) (diff-charts a b)
+    (and (lang/inventory? a) (lang/inventory? b)) (charts a b)
     :else (when (and (:slurp-charts (scrape/summary a))
                      (:slurp-charts (scrape/summary b)))
-            ((diff-charts a b)))))
+            ((charts a b)))))
 
 (spec/fdef summary
   :args (spec/cat :a ::lang/language
@@ -84,7 +84,7 @@
   (let [ma (scrape/summary a)
         mb (scrape/summary b)]
     {:keys [:a a :b b]
-     :charts (diff-charts a b)
+     :charts (charts a b)
      :other-sounds {:a (:other-sounds ma)
                     :b (:other-sounds mb)}
      :sources {:a (:source ma)
