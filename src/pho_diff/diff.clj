@@ -81,7 +81,7 @@
   (let [ma (scrape/summary a)
         mb (scrape/summary b)]
     {:keys [:a a :b b]
-     :charts (charts a b)
+     :charts (if (lang/diffed? a b) (lang/->map a b) (charts a b))
      :other-sounds {:a (:other-sounds ma)
                     :b (:other-sounds mb)}
      :sources {:a (:source ma)
