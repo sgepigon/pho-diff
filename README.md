@@ -55,7 +55,11 @@ lein run "english" "tagalog"
 
 ### Bugs
 
-Not all languages listed on the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) have an inventory chart. Instead, the pages say "Coming soon..." If either languages `a` or `b` lack an IPA chart, `pho-diff` will throw an error.
+If either languages `a` or `b` lack an IPA chart, `pho-diff` will throw an error.
+
+Not all languages listed on the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) have an inventory chart. Instead, the pages say "Coming soon…" e.g. "[malagasy](http://accent.gmu.edu/browse_native.php?function=detail&languageid=314)", "[yapese](http://accent.gmu.edu/browse_native.php?function=detail&languageid=185)", "[sotho](http://accent.gmu.edu/browse_native.php?function=detail&languageid=219)", "[hmong daw](http://accent.gmu.edu/browse_native.php?function=detail&languageid=355)", and "[tamajeq](http://accent.gmu.edu/browse_native.php?function=detail&languageid=209)".
+
+"[newari](http://accent.gmu.edu/browse_native.php?function=detail&languageid=220)" actually does not say "Coming soon…" but it is missing the charts. "newari" points to "[newar](http://accent.gmu.edu/browse_native.php?function=detail&languageid=223)" which does say "Coming soon…"
 
 There are some languages that do have IPA charts, but are slightly off, e.g. "[yupik](http://accent.gmu.edu/browse_native.php?function=detail&languageid=202)", "[mandinka](http://accent.gmu.edu/browse_native.php?function=detail&languageid=240)", and "[swiss german](http://accent.gmu.edu/browse_native.php?function=detail&languageid=197)". This misalignment results in ugly diffs:
 
