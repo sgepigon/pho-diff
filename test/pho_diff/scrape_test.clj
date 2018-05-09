@@ -6,6 +6,22 @@
             [pho-diff.scrape :as scrape]
             [user :as user]))
 
+(deftest corner-cases-test
+  ;; Famous values and common corner-cases via
+  ;; https://lispcast.com/unit-testing-in-functional-languages/
+  (testing "Empty string."
+    (is (thrown? clojure.lang.ExceptionInfo (scrape/summary ""))))
+  (testing "Not that kind of language..."
+    (is (thrown? clojure.lang.ExceptionInfo (scrape/summary "Clojure"))))
+  (testing "Languages are not capitalized."
+    (is (thrown? clojure.lang.ExceptionInfo (scrape/summary "English"))))
+  (testing "Normal case."
+    (is (= (scrape/summary "english")
+           {:charts {:cons "resources/inventory/englishipacons.gif",
+                     :vowels "resources/inventory/englishipavowels.gif"},
+            :other-sounds #{"labio-velar voiced central approximant [w]" "5 diphthongs"},
+            :source "http://accent.gmu.edu/browse_native.php?function=detail&languageid=18"}))))
+
 (deftest other-sounds-test
   (testing "English has a non-`nil` other sounds."
     (is (= (:other-sounds (scrape/summary "english"))
