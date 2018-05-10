@@ -9,8 +9,6 @@
 ;; generate specs, but it's good enough for my purposes.
 (spec/def ::html-data seq?)
 
-(def ^:private archive-url "http://accent.gmu.edu/browse_native.php")
-
 (defn- fetch-url
   "Grab the contents of the `URL` specified."
   [url]
@@ -28,7 +26,7 @@
 (defn inventory!
   "Scrape the language names and name->id map and write to files to `path`."
   [path]
-  (let [archive (fetch-url archive-url)
+  (let [archive (fetch-url "http://accent.gmu.edu/browse_native.php")
         languages (enlive/select archive [:div#maincontent :ul :li :a])
         name :content
         id #(re-find #"\d+" (first (enlive/attr-values % :href)))
