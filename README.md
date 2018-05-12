@@ -17,13 +17,13 @@ For two languages `a` and `b`, if a letter (which represents a distinctive sound
 
 Download from https://github.com/sgepigon/pho-diff.
 
-```
+``` bash
 git clone https://github.com/sgepigon/pho-diff.git
 ```
 
 ## Usage
 
-```
+``` bash
 lein run "a" "b"
 ```
 
@@ -31,11 +31,11 @@ lein run "a" "b"
 
 ## Examples
 
-```
+``` bash
 lein run "english" "tagalog"
 ```
 
-```clojure
+``` clojure
 {:keys [:a "english" :b "tagalog"],
  :charts
  {:cons "resources/output/english-tagalog-cons.gif",
