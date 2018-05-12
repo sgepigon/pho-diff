@@ -10,8 +10,12 @@ For two languages `a` and `b`, if a letter (which represents a distinctive sound
 
 # Resources
 
-  * The [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) provides the set of native language phonetic inventories (you can read more about the project [here](http://accent.gmu.edu/about.php)).
-  * [Interactive IPA Chart](http://www.ipachart.com/)
+  - The [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) provides the set of native language phonetic inventories (you can read more about the project [here](http://accent.gmu.edu/about.php)).
+  - [Phonetics, sound inventory (Babylon)](http://lingvo.info/en/babylon/phonetics) — an explanation of phonetics and phonology.
+  - [Interactive IPA Chart](http://www.ipachart.com/) — hear the approximant sounds that the symbols represent
+  - [Fluent Forever](https://fluent-forever.com/) — a language learning method that emphasizes learning the new sounds of a language and getting the pronunciation right.
+  - [American Speech-Language-Hearing Association](https://www.asha.org/practice/multicultural/Phono/) — a curated list of resources for learning the *phonemic* inventories and cultural information across languages.
+  - [UCLA Language Materials Project](http://www.lmp.ucla.edu/) — teaching resources for less commonly taught languages.
 
 ## Installation
 
