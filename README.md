@@ -8,6 +8,50 @@ When learning a new language, you need to know the new sounds: the ones that are
 
 For two languages `a` and `b`, if a letter (which represents a distinctive sound) is absent in `b`'s chart but present in `a`'s, it is colored green. Likewise, if a letter is absent in `a` but present in `b`, the letter is colored red (see [Examples](#examples)). `pho-diff` also outputs a Clojure map with additional information (other sounds not on the chart, links to the source URLs, etc.).
 
+`pho-diff` can be useful for second language learners trying to learn pronunciation. While IPA resources are biased for English speakers, `pho-diff` can assist with developing resources for ESL: it can identify sounds from someone's first language that may not exist in English or identify sounds in English that do not exist in someone's native language.
+
+`pho-diff` can diff between two arbitrary languages as long as they're in the [Speech Language Archive](http://accent.gmu.edu/browse_native.php); paired with [other tools](#resources), this can be helpful for languages that have fewer common resources or speakers.
+
+## Example Use Cases
+
+Use `pho-diff` to find the new sounds in the target language (colored green) and use the [Interactive IPA Chart](http://www.ipachart.com/) to hear roughly the sounds that the symbols represent.
+
+### An English speaker learning Spanish
+
+``` bash
+lein run "english" "spanish"
+```
+
+![](resources/README/english-spanish-cons.gif)
+![](resources/README/english-spanish-vowels.gif)
+
+### A Spanish speaker learning English
+
+``` bash
+lein run "spanish" "english"
+```
+
+![](resources/README/spanish-english-cons.gif)
+![](resources/README/spanish-english-vowels.gif)
+
+### A Korean speaker learning Esperanto
+
+``` bash
+lein run "korean" "esperanto"
+```
+
+![](resources/README/korean-esperanto-cons.gif)
+![](resources/README/korean-esperanto-vowels.gif)
+
+### A German speaker learning Tagalog
+
+``` bash
+lein run "german" "tagalog"
+```
+
+![](resources/README/german-tagalog-cons.gif)
+![](resources/README/german-tagalog-vowels.gif)
+
 # Resources
 
   - The [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) provides the set of native language phonetic inventories (you can read more about the project [here](http://accent.gmu.edu/about.php)).
@@ -74,12 +118,11 @@ The diff is usable, but still an eyesore.
 
 ## Built With
 
-  * [Clojure](https://clojure.org/) -- Written in Clojure
-  * [ImageMagick](https://www.imagemagick.org/) -- Uses the [convert](https://www.imagemagick.org/script/convert.php) program to create the diffs
+  - [Clojure](https://clojure.org/) – Written in Clojure
+  - [ImageMagick](https://www.imagemagick.org/) – Uses the [convert](https://www.imagemagick.org/script/convert.php) program to create the diffs
 
 ## License
 
 Copyright © 2017 Santiago Gepigon III
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
