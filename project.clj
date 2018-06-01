@@ -5,12 +5,12 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[enlive "1.1.6"]
                  [me.raynes/conch "0.8.0"]
-                 [org.clojure/clojure "1.10.0-alpha4"]]
+                 [org.clojure/clojure "1.9.0"]]
   :main ^:skip-aot pho-diff.core
   :target-path "target/%s"
   :profiles {:dev {:source-paths ["dev"]
-                   :dependencies [[expound "0.6.0"]
+                   :dependencies [[expound "0.7.0"]
                                   [orchestra "2017.11.12-1"]
-                                  [org.clojure/test.check "0.10.0-alpha2"]
-                                  [spec-provider "0.4.11"]]}
+                                  [org.clojure/test.check "0.9.0"]
+                                  [spec-provider "0.4.14"]]}
              :uberjar {:aot :all}})
