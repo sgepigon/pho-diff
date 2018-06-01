@@ -9,19 +9,12 @@
             [pho-diff.lang :as lang]
             [pho-diff.scrape :as scrape]))
 
-(orchestra/instrument)
-
-;; https://oli.me.uk/2017/10/18/taming-clojure-spec-with-expound/
-(alter-var-root #'spec/*explain-out* (constantly (expound/custom-printer
-                                                  {:show-valid-values? true
-                                                   :theme :figwheel-theme})))
-
-(defn restrument
-  "Re-instrument all functions
-
-  Hooked into `cider-refresh`."
-  []
-  (orchestra/instrument))
+(defn -main []
+  (do
+    (set! spec/*explain-out* (expound/custom-printer {:print-specs? false
+                                                      :show-valid-values? true
+                                                      :theme :figwheel-theme}))
+    (orchestra/instrument)))
 
 (defn check-result
   "Return the results of `spec.test/check` on `sym` given `num-tests` (default
