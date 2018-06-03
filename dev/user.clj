@@ -4,7 +4,7 @@
             [clojure.spec.test.alpha :as spec.test]
             [expound.alpha :as expound]
             [orchestra.spec.test :as orchestra]
-            [pho-diff.core :refer :all]
+            [pho-diff.core :as core]
             [pho-diff.diff :as diff]
             [pho-diff.lang :as lang]
             [pho-diff.scrape :as scrape]))
