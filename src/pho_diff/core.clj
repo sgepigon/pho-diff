@@ -1,4 +1,5 @@
 (ns pho-diff.core
+  "TODO Add ns docstring"
   (:gen-class)
   (:require [clojure.java.browse :as browse]
             [clojure.pprint :as pprint]
