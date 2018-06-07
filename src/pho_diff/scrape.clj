@@ -48,7 +48,8 @@
   [html-data]
   (when-let [[cons vowels] (-> html-data
                                (enlive/select [:div.content :p :img])
-                               (->> (mapv (comp :src :attrs))))]
+                               (->> (mapv (comp :src :attrs)))
+                               seq)]
     {:cons cons :vowels vowels}))
 
 (spec/fdef slurp-charts
