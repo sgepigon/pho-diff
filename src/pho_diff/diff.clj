@@ -34,7 +34,8 @@
                                           :articulation ::lang/articulation)
                   :both-charts (spec/cat :a ::lang/language
                                          :b ::lang/language))
-  :ret any?)
+  :ret (spec/or :single-chart #{""}
+                :both-charts ::lang/charts))
 
 (defn- charts
   "Generate the diff of the IPA charts for languages `a` and `b`.
@@ -48,7 +49,7 @@
         (lang/->path a b articulation)))
   ([a b]
    (do (doseq [articulation lang/articulations] (charts a b articulation))
-       (lang/->map a b))))
+       (lang/->charts a b))))
 
 (spec/fdef diff
   :args (spec/cat :a ::lang/language :b ::lang/language)
@@ -59,7 +60,7 @@
   [a b]
   ;; Are the charts already downloaded?
   (cond
-    (lang/diffed? a b) {:charts (lang/->map a b)
+    (lang/diffed? a b) {:charts (lang/->charts a b)
                         :other-sounds {:a (:other-sounds (scrape/summary a))
                                        :b (:other-sounds (scrape/summary b))}}
     (and (lang/inventory? a) (lang/inventory? b)) (charts a b)
@@ -71,7 +72,7 @@
   :args (spec/cat :a ::lang/language
                   :b ::lang/language)
   ;; FIXME spec the return map of `summary`
-  :ret (spec/nilable (spec/keys :req-un [::charts ::other-sounds ::sources])))
+  :ret (spec/nilable (spec/keys :req-un [::lang/charts ::other-sounds ::sources])))
 
 (defn summary
   "diff the `summary` of languages `a` and `b`.
@@ -82,7 +83,7 @@
         mb (scrape/summary b)]
     {:ks {:a a :b b}
      :charts (if (lang/diffed? a b)
-               (lang/->map a b)
+               (lang/->charts a b)
                ;; only diff/charts if both languages have charts
                (when (and (:charts ma) (:charts mb)) (charts a b)))
      :other-sounds {:a (:other-sounds ma)

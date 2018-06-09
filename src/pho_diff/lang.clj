@@ -14,6 +14,7 @@
 (spec/def ::articulation articulations)
 (spec/def ::language languages)
 (spec/def ::other-sounds (spec/coll-of string? :kind set?))
+(spec/def ::charts (spec/nilable (spec/keys :req-un [::cons ::vowels])))
 
 (spec/fdef ->url
   :args (spec/cat :language ::language)
@@ -68,11 +69,11 @@
   ([a b articulation]
    (str output (->filename a b articulation))))
 
-(spec/fdef ->map
+(spec/fdef ->charts
   :args (spec/cat :a ::language :b ::language)
-  :ret (spec/keys :req-un [::cons ::vowels]))
+  :ret ::charts)
 
-(defn ->map
+(defn ->charts
   "Return a map of the file paths of the consonant and vowel diff of languages
   `a`and`b`."
   [a b]
