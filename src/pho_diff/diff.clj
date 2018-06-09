@@ -80,8 +80,11 @@
   [a b]
   (let [ma (scrape/summary a)
         mb (scrape/summary b)]
-    {:keys [:a a :b b]
-     :charts (if (lang/diffed? a b) (lang/->map a b) (charts a b))
+    {:ks {:a a :b b}
+     :charts (if (lang/diffed? a b)
+               (lang/->map a b)
+               ;; only diff/charts if both languages have charts
+               (when (and (:charts ma) (:charts mb)) (charts a b)))
      :other-sounds {:a (:other-sounds ma)
                     :b (:other-sounds mb)}
      :sources {:a (:source ma)
