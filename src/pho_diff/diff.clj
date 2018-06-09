@@ -55,8 +55,8 @@
   :args (spec/cat :a ::lang/language :b ::lang/language)
   :ret any?)
 
-(defn diff
   "TODO Implement full `diff` with `charts` and `other-sounds`."
+(defn- diff
   [a b]
   ;; Are the charts already downloaded?
   (cond
@@ -75,9 +75,7 @@
   :ret (spec/nilable (spec/keys :req-un [::lang/charts ::other-sounds ::sources])))
 
 (defn summary
-  "diff the `summary` of languages `a` and `b`.
-
-  TODO potentially make this the default `diff` algorithm."
+  "diff the `summary` of languages `a` and `b`."
   [a b]
   (let [ma (scrape/summary a)
         mb (scrape/summary b)]
