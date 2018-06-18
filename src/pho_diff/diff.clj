@@ -52,23 +52,6 @@
    (do (doseq [articulation lang/articulations] (charts a b articulation))
        (lang/->charts a b))))
 
-(spec/fdef diff
-  :args (spec/cat :a ::lang/language :b ::lang/language)
-  :ret any?)
-
-  "TODO Implement full `diff` with `charts` and `other-sounds`."
-(defn- diff
-  [a b]
-  ;; Are the charts already downloaded?
-  (cond
-    (lang/diffed? a b) {:charts (lang/->charts a b)
-                        :other-sounds {:a (:other-sounds (scrape/summary a))
-                                       :b (:other-sounds (scrape/summary b))}}
-    (and (lang/inventory? a) (lang/inventory? b)) (charts a b)
-    :else (when (and (:slurp-charts (scrape/summary a))
-                     (:slurp-charts (scrape/summary b)))
-            ((charts a b)))))
-
 (spec/fdef summary
   :args (spec/cat :a ::lang/language
                   :b ::lang/language)
