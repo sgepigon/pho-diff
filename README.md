@@ -103,7 +103,7 @@ lein run "english" "tagalog"
 
 ### Bugs
 
-If either languages `a` or `b` lack an IPA chart, `pho-diff` will throw an error.
+If either languages `a` or `b` lack an IPA chart, `pho-diff` will return `nil`.
 
 Not all languages listed on the [Speech Accent Archive](http://accent.gmu.edu/browse_native.php) have an inventory chart. Instead, the pages say "Coming soon…" e.g. "[malagasy](http://accent.gmu.edu/browse_native.php?function=detail&languageid=314)", "[yapese](http://accent.gmu.edu/browse_native.php?function=detail&languageid=185)", "[sotho](http://accent.gmu.edu/browse_native.php?function=detail&languageid=219)", "[hmong daw](http://accent.gmu.edu/browse_native.php?function=detail&languageid=355)", and "[tamajeq](http://accent.gmu.edu/browse_native.php?function=detail&languageid=209)".
 
